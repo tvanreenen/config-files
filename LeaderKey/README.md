@@ -20,14 +20,11 @@ This is a personal configuration file for [LeaderKey](https://github.com/mikker/
 This method keeps your configuration in sync with this repository:
 
 ```bash
-# Navigate to the config-files directory
-cd ~/.config/config-files  # or wherever you cloned this repo
-
 # Backup existing config (if any)
-mv ~/Library/Application\ Support/LeaderKey/config.json ~/Library/Application\ Support/LeaderKey/config.json.backup
+mv ~/Library/Application\ Support/Leader\ Key/config.json ~/Library/Application\ Support/Leader\ Key/config.json.backup
 
-# Create symbolic link
-ln -s "$(pwd)/LeaderKey/config.json" ~/Library/Application\ Support/LeaderKey/config.json
+# Create symbolic link (adjust the source path to match your repository location)
+ln -s ~/Code/config-files/LeaderKey/config.json ~/Library/Application\ Support/Leader\ Key/config.json
 ```
 
 #### Option 2: Copy Configuration
@@ -35,8 +32,8 @@ ln -s "$(pwd)/LeaderKey/config.json" ~/Library/Application\ Support/LeaderKey/co
 If you prefer to copy the file instead:
 
 ```bash
-# Copy the config file
-cp LeaderKey/config.json ~/Library/Application\ Support/LeaderKey/config.json
+# Copy the config file (adjust the source path to match your repository location)
+cp ~/Code/config-files/LeaderKey/config.json ~/Library/Application\ Support/Leader\ Key/config.json
 ```
 
 ### Restart LeaderKey
