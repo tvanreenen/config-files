@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Battery_barChart_position</key>
+	<integer>3</integer>
+	<key>Battery_batteryDetails_position</key>
+	<integer>0</integer>
+	<key>Battery_battery_details_mode</key>
+	<string>percentageAndTime</string>
+	<key>Battery_battery_position</key>
+	<integer>4</integer>
+	<key>Battery_label_position</key>
+	<integer>1</integer>
+	<key>Battery_mini_position</key>
+	<integer>2</integer>
+	<key>Battery_notifications_high</key>
+	<string></string>
+	<key>Battery_notifications_low</key>
+	<string>low</string>
+	<key>Battery_widget</key>
+	<string>battery_details</string>
+	<key>Bluetooth_label_position</key>
+	<integer>1</integer>
+	<key>Bluetooth_stack_position</key>
+	<integer>0</integer>
+	<key>Bluetooth_state</key>
+	<false/>
+	<key>Bluetooth_widget</key>
+	<string>sensors</string>
+	<key>CPU_barChart_position</key>
+	<integer>3</integer>
+	<key>CPU_label_position</key>
+	<integer>1</integer>
+	<key>CPU_lineChart_position</key>
+	<integer>2</integer>
+	<key>CPU_mini_color</key>
+	<string>monochrome</string>
+	<key>CPU_mini_position</key>
+	<integer>0</integer>
+	<key>CPU_pieChart_position</key>
+	<integer>4</integer>
+	<key>CPU_tachometer_position</key>
+	<integer>5</integer>
+	<key>CPU_widget</key>
+	<string>mini</string>
+	<key>Clock_list</key>
+	<data>
+	W3siaWQiOiI0REVFNDhCRi02QTU2LTQ3RUUtOTI5QS0xNjIwMUEwRDM4MTQiLCJmb3Jt
+	YXQiOiJ5eXl5LU1NLWRkICdXJ3d3IiwibmFtZSI6IkRhdGUiLCJ0eiI6ImxvY2FsIiwi
+	ZW5hYmxlZCI6dHJ1ZX0seyJpZCI6IkI0QTJGRUU4LTNERTYtNEQ2MS1CMDRDLTJDMDhD
+	MUFEOEZFQSIsImZvcm1hdCI6IkVFRUVFIEhIOm1tOnNzIFoiLCJuYW1lIjoiVGltZSIs
+	InR6IjoibG9jYWwiLCJlbmFibGVkIjp0cnVlfSx7ImlkIjoiNTA3OEFCODktMDhGOS00
+	MjI2LTlBNDYtQTIyMkY5MEVEMEEzIiwiZm9ybWF0IjoiRUVFRUUgSEg6bW06c3MgWiIs
+	Im5hbWUiOiJJU1QiLCJ0eiI6IjU6MzAiLCJlbmFibGVkIjpmYWxzZX1d
+	</data>
+	<key>Clock_sensors_mode</key>
+	<string>twoRows</string>
+	<key>Clock_state</key>
+	<true/>
+	<key>E69D0611-BB1D-4C7E-A91E-6A1CF9AFE627_details</key>
+	<true/>
+	<key>GPU_state</key>
+	<true/>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{880, 448}</string>
+	<key>NSNavPanelExpandedStateForSaveMode</key>
+	<true/>
+	<key>NSOSPLastRootDirectory</key>
+	<data>
+	Ym9vawADAAAAAAUQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	AAAAAAAAAAAAAAAAAMgBAAAEAAAAAwMAAAAEAAAFAAAAAQEAAFVzZXJzAAAADQAAAAEB
+	AAB0aW0udmFucmVlbmVuAAAABwAAAAEBAABEZXNrdG9wAAwAAAABBgAAEAAAACAAAAA4
+	AAAACAAAAAQDAAAVXQAAAAAAAAgAAAAEAwAA4OQDAAAAAAAIAAAABAMAAGp6BAAAAAAA
+	DAAAAAEGAABcAAAAbAAAAHwAAAAIAAAAAAQAAEHDilwKAAAAGAAAAAECAAACAAAAAAAA
+	AB8CAAAAAAAAHwIAAAAAAAAAAAAAAQUAAAgAAAAEAwAAAQAAAAAAAAAEAAAAAwMAAPUB
+	AAAIAAAAAQkAAGZpbGU6Ly8vDAAAAAEBAABNYWNpbnRvc2ggSEQIAAAABAMAAAAAhxE5
+	AAAACAAAAAAEAABBx1jRwAAAACQAAAABAQAANzVEQzRCNUQtRjgzNy00MUJELThEQ0Ut
+	MzU1MEVEMjk2MjU3GAAAAAECAACBAAAAAQAAAO8TAAABAAAA7xMAAAEAAAABAAAAAQEA
+	AC8AAAAwAAAAAQIAAGRuaWIAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGtz
+	ZWQCAAAAAAAAAPAAAAD+////AQAAAAAAAAATAAAABBAAAEgAAAAAAAAABRAAAIwAAAAA
+	AAAAEBAAALAAAAAAAAAAQBAAAKAAAAAAAAAAAiAAAIQBAAAAAAAABSAAAPQAAAAAAAAA
+	ECAAAAQBAAAAAAAAESAAADgBAAAAAAAAEiAAABgBAAAAAAAAEyAAACgBAAAAAAAAICAA
+	AGQBAAAAAAAAMCAAANAAAAAAAAAAAcAAANgAAAAAAAAAEcAAACAAAAAAAAAAEsAAAOgA
+	AAAAAAAAAdAAANAAAAAAAAAAENAAAAQAAAAAAAAAF/AAADgAAAAAAAAAIvAAAJABAAAA
+	AAAA
+	</data>
+	<key>NSStatusItem Preferred Position Battery_battery_details</key>
+	<real>123</real>
+	<key>NSStatusItem Preferred Position CPU_mini</key>
+	<real>316</real>
+	<key>NSStatusItem Preferred Position Clock_sensors</key>
+	<integer>159</integer>
+	<key>NSStatusItem Preferred Position Disk_mini</key>
+	<real>410</real>
+	<key>NSStatusItem Preferred Position GPU_mini</key>
+	<real>269</real>
+	<key>NSStatusItem Preferred Position Network_speed</key>
+	<real>457</real>
+	<key>NSStatusItem Preferred Position RAM_mini</key>
+	<real>363</real>
+	<key>NSToolbar Configuration eu.exelban.Stats.Settings.Toolbar</key>
+	<dict>
+		<key>TB Display Mode</key>
+		<integer>1</integer>
+		<key>TB Icon Size Mode</key>
+		<integer>1</integer>
+		<key>TB Is Shown</key>
+		<true/>
+		<key>TB Size Mode</key>
+		<integer>1</integer>
+	</dict>
+	<key>Network_speed_icon</key>
+	<string>none</string>
+	<key>Network_speed_iconColor</key>
+	<string>transparent</string>
+	<key>Network_speed_value</key>
+	<true/>
+	<key>Network_speed_valueColor</key>
+	<string>none</string>
+	<key>clock_4DEE48BF-6A56-47EE-929A-16201A0D3814_popupState</key>
+	<false/>
+	<key>clock_B4A2FEE8-3DE6-4D61-B04C-2C08C1AD8FEA_popupState</key>
+	<false/>
+	<key>remote_id</key>
+	<string>AA87CFF0-C13C-4ED3-B22A-CA879841E7BB</string>
+	<key>setupProcess</key>
+	<true/>
+	<key>telemetry</key>
+	<true/>
+	<key>updater_check_ts</key>
+	<integer>1766293705</integer>
+	<key>version</key>
+	<string>2.11.62</string>
+</dict>
+</plist>
