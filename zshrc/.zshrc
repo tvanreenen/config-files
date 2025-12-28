@@ -1,12 +1,13 @@
 # ————————————————————————————————————————————————————————————————
+# PATH & Environment Setup
+# ————————————————————————————————————————————————————————————————
+
+# ————————————————————————————————————————————————————————————————
 # Homebrew
-# - Use brew’s official shellenv to set PATH, MANPATH, INFOPATH, etc.
-# - Add Homebrew’s zsh site-functions so completions (git, just, kubectl, etc.)
-#   are automatically discovered before compinit runs.
+# - Use brew's official shellenv to set PATH, MANPATH, INFOPATH, etc.
 # ————————————————————————————————————————————————————————————————
 if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
-  fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
 fi
 
 # ————————————————————————————————————————————————————————————————
@@ -17,20 +18,56 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 # ————————————————————————————————————————————————————————————————
-# Docker Desktop completions
-# - Docker drops zsh completion files here; add only if the directory exists.
+# Bun
+# - JavaScript runtime, package manager, and bundler.
+# - Adds bun to PATH and loads shell completions if available.
 # ————————————————————————————————————————————————————————————————
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "/Users/tim.vanreenen/.bun/_bun" ] && source "/Users/tim.vanreenen/.bun/_bun"
+
+# ————————————————————————————————————————————————————————————————
+# Google Cloud SDK
+# - Updates PATH and enables shell command completion for gcloud.
+# - Only loads if the SDK is installed at the expected location.
+# ————————————————————————————————————————————————————————————————
+if [ -f '/Users/tim.vanreenen/Code/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/tim.vanreenen/Code/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/tim.vanreenen/Code/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/tim.vanreenen/Code/google-cloud-sdk/completion.zsh.inc'; fi
+
+# ————————————————————————————————————————————————————————————————
+# Completion System Setup
+# ————————————————————————————————————————————————————————————————
+
+# ————————————————————————————————————————————————————————————————
+# Completion search paths (fpath)
+# - Add all completion directories to fpath before compinit runs.
+# - Order matters: more specific completions should come first.
+# ————————————————————————————————————————————————————————————————
+
+# Homebrew site-functions (completions for git, just, kubectl, etc.)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
+fi
+
+# Docker Desktop completions
 if [[ -d "$HOME/.docker/completions" ]]; then
   fpath=("$HOME/.docker/completions" $fpath)
 fi
 
+# zsh-completions (additional completions)
+# - Community-maintained collection of completion scripts for commands
+#   that don't ship with completions or need improved completions.
+if type brew &>/dev/null && [[ -d "$(brew --prefix)/share/zsh-completions" ]]; then
+  fpath=("$(brew --prefix)/share/zsh-completions" $fpath)
+fi
+
 # ————————————————————————————————————————————————————————————————
-# zsh completion system
+# zsh completion system initialization
 # - fpath: search path for zsh functions & completions.
 # - De-duplicate, then initialize once.
 # - compinit:
 #     -i → ignore insecure directories instead of aborting.
-#     -C → skip rebuilding the cache if it’s still valid (faster startup).
+#     -C → skip rebuilding the cache if it's still valid (faster startup).
 # - ZSH_COMPDUMP stores the compiled completions cache; versioned for safety.
 # ————————————————————————————————————————————————————————————————
 typeset -U fpath
@@ -41,11 +78,25 @@ compinit -i -C
 # ————————————————————————————————————————————————————————————————
 # Completion cache & matcher options
 # - Enable caching and ensure the cache directory exists.
-# - Optional matcher-list enables case-insensitive & word-boundary completion.
+# - matcher-list enables case-insensitive & word-boundary completion.
 # ————————————————————————————————————————————————————————————————
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zsh/cache"
 [[ -d "$HOME/.zsh/cache" ]] || mkdir -p "$HOME/.zsh/cache"
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# ————————————————————————————————————————————————————————————————
+# Aliases
+# ————————————————————————————————————————————————————————————————
+
+alias ls='ls -G'
+alias ll='ls -lhG'
+alias la='ls -lahG'
+
+# ————————————————————————————————————————————————————————————————
+# Interactive Shell Features
+# ————————————————————————————————————————————————————————————————
 
 # ————————————————————————————————————————————————————————————————
 # fzf integration (dynamic)
@@ -65,18 +116,22 @@ fi
 # export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --info=inline"
 
 # ————————————————————————————————————————————————————————————————
-# Google Cloud SDK
-# - Updates PATH and enables shell command completion for gcloud.
-# - Only loads if the SDK is installed at the expected location.
+# zsh-autosuggestions
+# - Suggests commands as you type based on history and completions.
+# - Accept suggestion: Right arrow or End key.
+# - Partial accept: Ctrl+Right arrow.
+# - Must be loaded before zsh-syntax-highlighting.
 # ————————————————————————————————————————————————————————————————
-if [ -f '/Users/tim.vanreenen/Code/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/tim.vanreenen/Code/google-cloud-sdk/path.zsh.inc'; fi
-if [ -f '/Users/tim.vanreenen/Code/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/tim.vanreenen/Code/google-cloud-sdk/completion.zsh.inc'; fi
+if [[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 # ————————————————————————————————————————————————————————————————
-# Bun
-# - JavaScript runtime, package manager, and bundler.
-# - Adds bun to PATH and loads shell completions if available.
+# zsh-syntax-highlighting
+# - Provides real-time syntax highlighting for commands.
+# - Colors valid commands, paths, and highlights errors.
+# - Must be loaded last (after all other plugins).
 # ————————————————————————————————————————————————————————————————
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "/Users/tim.vanreenen/.bun/_bun" ] && source "/Users/tim.vanreenen/.bun/_bun"
+if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
