@@ -99,6 +99,17 @@ alias la='ls -lahG'
 # ————————————————————————————————————————————————————————————————
 
 # ————————————————————————————————————————————————————————————————
+# Starship prompt
+# - Cross-shell prompt that displays git status, language versions, and more.
+# - Fast, customizable, and works across different shells.
+# - Configuration file: ~/.config/starship.toml (auto-created on first run).
+# - Only loads in interactive shells.
+# ————————————————————————————————————————————————————————————————
+if [[ $- == *i* ]] && command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
+
+# ————————————————————————————————————————————————————————————————
 # fzf integration (dynamic)
 # - Runs only in interactive shells.
 # - Adds key bindings:

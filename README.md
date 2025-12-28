@@ -6,6 +6,7 @@ My personal macOS application configurations managed with [GNU Stow](https://www
 - [Ghostty](https://github.com/mitchellh/ghostty): Terminal emulator (`~/Library/Application Support/com.mitchellh.ghostty/config`)
 - [LeaderKey](https://github.com/mikker/LeaderKey): App launcher (`~/Library/Application Support/Leader Key/config.json`)
 - [Stats](https://github.com/exelban/stats): System monitor (`~/Library/Preferences/eu.exelban.Stats.plist`)
+- [Starship](https://starship.rs/): Cross-shell prompt (`~/.config/starship.toml`)
 - Zsh: Shell configuration (`~/.zshrc`)
 
 ## Quick Start

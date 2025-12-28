@@ -4,11 +4,13 @@ default:
 setup-desktop:
 	stow AeroSpace
 	stow ghostty
+	stow starship
 	stow zshrc
 	@echo "Skipping stow of Stats, config must be imported through UI"
 
 setup-laptop:
 	stow ghostty
+	stow starship
 	stow zshrc
 	@echo "Skipping stow of Stats, config must be imported through UI"
 
