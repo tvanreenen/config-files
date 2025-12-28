@@ -3,6 +3,7 @@
 My personal macOS application configurations managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 - [AeroSpace](https://github.com/nikitabobko/AeroSpace): i3-like tiling window manager (`~/.aerospace.toml`)
+- [Ghostty](https://github.com/mitchellh/ghostty): Terminal emulator (`~/Library/Application Support/com.mitchellh.ghostty/config`)
 - [LeaderKey](https://github.com/mikker/LeaderKey): App launcher (`~/Library/Application Support/Leader Key/config.json`)
 - [Stats](https://github.com/exelban/stats): System monitor (`~/Library/Preferences/eu.exelban.Stats.plist`)
 

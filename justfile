@@ -3,9 +3,11 @@ default:
 
 setup-desktop:
 	stow AeroSpace
+	stow ghostty
 	stow stats-desktop
 
 setup-laptop:
+	stow ghostty
 	stow stats-laptop
 
 dry-run PACKAGE:
