@@ -1,12 +1,33 @@
 # Config Files
 
-A personal repository of configuration files for my go-to applications. This repo helps me keep my app configurations synchronized across multiple machines and provides a backup of my preferred settings.
+My personal macOS application configurations managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-### [AeroSpace](./AeroSpace/)
-An i3-like tiling window manager for macOS with dual-monitor workspace configuration.
+- [AeroSpace](https://github.com/nikitabobko/AeroSpace): i3-like tiling window manager (`~/.aerospace.toml`)
+- [LeaderKey](https://github.com/mikker/LeaderKey): App launcher (`~/Library/Application Support/Leader Key/config.json`)
+- [Stats](https://github.com/exelban/stats): System monitor (`~/Library/Preferences/eu.exelban.Stats.plist`)
 
-### [LeaderKey](./LeaderKey/)
-A macOS app launcher that provides quick access to applications via keyboard shortcuts.
+## Quick Start
 
-### [Stats](./stats/)
-macOS system monitor for the menu bar that displays CPU, GPU, RAM, disk, network, and battery information.
+```bash
+# Full setup (Desktop or Laptop)
+just setup-desktop
+just setup-laptop
+```
+
+## Adding a New Application Config
+
+1. **Option 1** Add the config file manually:
+
+   ```bash
+   mkdir -p AppName/Library/Preferences
+   cp ~/Library/Preferences/com.example.app.plist AppName/Library/Preferences/
+   stow AppName
+   ```
+
+2. **Option 2** Add the config with `stow`:
+
+   ```bash
+   mkdir -p AppName/Library/Preferences
+   touch AppName/Library/Preferences/com.example.app.plist
+   stow --adopt AppName
+   ```

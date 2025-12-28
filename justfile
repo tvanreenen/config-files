@@ -1,10 +1,15 @@
 default:
 	@just --list --unsorted
-	
-# Copy Desktop stats configuration
-stats-desktop:
-    cp ~/Code/config-files/stats/Stats-Desktop.plist ~/Library/Preferences/eu.exelban.Stats.plist
 
-# Copy Laptop stats configuration
-stats-laptop:
-    cp ~/Code/config-files/stats/Stats-Laptop.plist ~/Library/Preferences/eu.exelban.Stats.plist
+setup-desktop:
+	stow AeroSpace
+	stow stats-desktop
+
+setup-laptop:
+	stow stats-laptop
+
+dry-run PACKAGE:
+	stow -n -v {{PACKAGE}}
+
+unstow PACKAGE:
+	stow -D {{PACKAGE}}
