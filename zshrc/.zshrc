@@ -99,6 +99,30 @@ alias la='ls -lahG'
 # ————————————————————————————————————————————————————————————————
 
 # ————————————————————————————————————————————————————————————————
+# Vim key bindings
+# - Enable vi mode for command-line editing (insert mode by default).
+# - Press ESC to enter normal mode, 'i' or 'a' to return to insert mode.
+# - In normal mode: h/j/k/l for navigation, 'A' to append at end, etc.
+# - Cursor changes: block cursor in normal mode, line cursor in insert mode.
+# ————————————————————————————————————————————————————————————————
+bindkey -v
+
+# Set vi mode cursor styles for visual feedback
+zle-keymap-select() {
+  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'  # Block cursor in normal mode
+  elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} == '' ]] || [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'  # Line cursor in insert mode
+  fi
+}
+zle-line-init() {
+  zle -K viins
+  echo -ne '\e[5 q'  # Start in insert mode with line cursor
+}
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+# ————————————————————————————————————————————————————————————————
 # Starship prompt
 # - Cross-shell prompt that displays git status, language versions, and more.
 # - Fast, customizable, and works across different shells.
@@ -129,8 +153,11 @@ fi
 # ————————————————————————————————————————————————————————————————
 # zsh-autosuggestions
 # - Suggests commands as you type based on history and completions.
-# - Accept suggestion: Right arrow or End key.
-# - Partial accept: Ctrl+Right arrow.
+# - Accept entire suggestion:
+#     * Insert mode: Right arrow (→) or End key
+#     * Normal mode: 'l' or Right arrow (→) - note: may stay in normal mode
+# - Accept one word at a time: Ctrl+Right arrow (→) in insert mode
+# - Partial accept: Ctrl+Right arrow in insert mode
 # - Must be loaded before zsh-syntax-highlighting.
 # ————————————————————————————————————————————————————————————————
 if [[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
