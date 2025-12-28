@@ -4,11 +4,11 @@ default:
 setup-desktop:
 	stow AeroSpace
 	stow ghostty
-	stow stats-desktop
+	@echo "Skipping stow of Stats, config must be imported through UI"
 
 setup-laptop:
 	stow ghostty
-	stow stats-laptop
+	@echo "Skipping stow of Stats, config must be imported through UI"
 
 dry-run PACKAGE:
 	stow -n -v {{PACKAGE}}
