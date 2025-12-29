@@ -1,18 +1,23 @@
 default:
 	@just --list --unsorted
 
-setup-desktop:
-	stow AeroSpace
-	stow ghostty
-	stow starship
-	stow zshrc
-	@echo "Skipping stow of Stats, config must be imported through UI"
+install-sketchybar:
+	brew tap FelixKratz/formulae
+	brew install sketchybar
+	brew services start felixkratz/formulae/sketchybar
+	stow sketchybar
 
-setup-laptop:
+install-ghostty:
+	brew install --cask ghostty
 	stow ghostty
+
+install-starship:
+	brew install starship
 	stow starship
-	stow zshrc
-	@echo "Skipping stow of Stats, config must be imported through UI"
+
+install-aerospace:
+	brew install --cask nikitabobko/tap/aerospace
+	stow AeroSpace
 
 dry-run PACKAGE:
 	stow -n -v {{PACKAGE}}

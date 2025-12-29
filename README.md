@@ -1,36 +1,33 @@
 # Config Files
 
-My personal macOS application configurations managed with [GNU Stow](https://www.gnu.org/software/stow/).
+This repository contains configuration files for various tools and applications, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-- [AeroSpace](https://github.com/nikitabobko/AeroSpace): i3-like tiling window manager (`~/.aerospace.toml`)
-- [Ghostty](https://github.com/mitchellh/ghostty): Terminal emulator (`~/Library/Application Support/com.mitchellh.ghostty/config`)
-- [LeaderKey](https://github.com/mikker/LeaderKey): App launcher (`~/Library/Application Support/Leader Key/config.json`)
-- [Stats](https://github.com/exelban/stats): System monitor (`~/Library/Preferences/eu.exelban.Stats.plist`)
-- [Starship](https://starship.rs/): Cross-shell prompt (`~/.config/starship.toml`)
-- Zsh: Shell configuration (`~/.zshrc`)
+## Active Configurations
 
-## Quick Start
+- **[SketchyBar](https://github.com/FelixKratz/SketchyBar)** - Transparent macOS menu bar replacement with system monitoring widgets
+- **[Ghostty](https://github.com/mitchellh/ghostty)** - Terminal emulator configuration
+- **[Starship](https://starship.rs/)** - Cross-shell prompt
+- **[AeroSpace](https://github.com/nikitabobko/AeroSpace)** - i3-like tiling window manager for macOS
+
+## Kept but Unused Files
+
+- **[LeaderKey](https://github.com/mikker/LeaderKey)** - Keyboard shortcut configuration (not currently in use)
+- **[Stats](https://github.com/exelban/stats)** - System monitoring preferences (not currently in use)
+
+## Usage
+
+Install configurations using [`just`](https://github.com/casey/just):
 
 ```bash
-# Full setup (Desktop or Laptop)
-just setup-desktop
-just setup-laptop
+just install-sketchybar
+just install-ghostty
+just install-starship
+just install-aerospace
 ```
 
-## Adding a New Application Config
+Each command installs the tool via Homebrew and then runs `stow` to symlink the configuration files.
 
-1. **Option 1** Add the config file manually:
+## Stow Management
 
-   ```bash
-   mkdir -p AppName/Library/Preferences
-   cp ~/Library/Preferences/com.example.app.plist AppName/Library/Preferences/
-   stow AppName
-   ```
-
-2. **Option 2** Add the config with `stow`:
-
-   ```bash
-   mkdir -p AppName/Library/Preferences
-   touch AppName/Library/Preferences/com.example.app.plist
-   stow --adopt AppName
-   ```
+- `just dry-run PACKAGE` - Preview what stow would do
+- `just unstow PACKAGE` - Remove symlinks for a package
