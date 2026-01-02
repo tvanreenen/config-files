@@ -1,28 +1,22 @@
 #!/bin/sh
 
-# Network plugin for SketchyBar
-# Shows upload/download speeds in single line format
-
 STATE_FILE="/tmp/sketchybar_network_state"
 INTERFACE_FILE="/tmp/sketchybar_network_interface"
 
-# Cache network interface (rarely changes, re-check every 60 seconds)
+CURRENT_TIME=$(date +%s)
+
 INTERFACE=""
 if [ -f "$INTERFACE_FILE" ]; then
   INTERFACE_CACHE_TIME=$(head -1 "$INTERFACE_FILE")
-  CURRENT_TIME=$(date +%s)
-  # Re-check interface every 60 seconds
   if [ $((CURRENT_TIME - INTERFACE_CACHE_TIME)) -lt 60 ]; then
     INTERFACE=$(sed -n '2p' "$INTERFACE_FILE")
   fi
 fi
 
 if [ -z "$INTERFACE" ]; then
-  # Get network interface (WiFi or Ethernet)
-  INTERFACE=$(route get default 2>/dev/null | grep interface | awk '{print $2}')
+  INTERFACE=$(route get default 2>/dev/null | awk '/interface/ {print $2}')
   
   if [ -z "$INTERFACE" ]; then
-    # Fallback: check common interfaces
     if ifconfig en0 2>/dev/null | grep -q "status: active"; then
       INTERFACE="en0"
     elif ifconfig en1 2>/dev/null | grep -q "status: active"; then
@@ -33,59 +27,58 @@ if [ -z "$INTERFACE" ]; then
     fi
   fi
   
-  # Cache interface with timestamp
-  echo "$(date +%s)" > "$INTERFACE_FILE"
+  echo "$CURRENT_TIME" > "$INTERFACE_FILE"
   echo "$INTERFACE" >> "$INTERFACE_FILE"
 fi
 
-# Get current byte counts from netstat
-CURRENT_RX=$(netstat -ib | grep "^$INTERFACE" | head -1 | awk '{print $7}')
-CURRENT_TX=$(netstat -ib | grep "^$INTERFACE" | head -1 | awk '{print $10}')
+NETSTAT_DATA=$(netstat -ib | awk -v iface="$INTERFACE" '$1 == iface {print $7, $10; exit}')
 
-if [ -z "$CURRENT_RX" ] || [ -z "$CURRENT_TX" ]; then
-  DOWNLOAD="0.0K"
-  UPLOAD="0.0K"
+if [ -z "$NETSTAT_DATA" ]; then
+  LABEL="0.0K↑ 0.0K↓"
 else
-  # Read previous values from state file
-  if [ -f "$STATE_FILE" ]; then
-    PREV_TIME=$(head -1 "$STATE_FILE")
-    PREV_RX=$(sed -n '2p' "$STATE_FILE")
-    PREV_TX=$(sed -n '3p' "$STATE_FILE")
+  CURRENT_RX=$(echo "$NETSTAT_DATA" | awk '{print $1}')
+  CURRENT_TX=$(echo "$NETSTAT_DATA" | awk '{print $2}')
+  
+  if [ -z "$CURRENT_RX" ] || [ -z "$CURRENT_TX" ]; then
+    LABEL="0.0K↑ 0.0K↓"
   else
-    PREV_TIME=$(date +%s)
-    PREV_RX=$CURRENT_RX
-    PREV_TX=$CURRENT_TX
+    if [ -f "$STATE_FILE" ]; then
+      PREV_TIME=$(head -1 "$STATE_FILE")
+      PREV_RX=$(sed -n '2p' "$STATE_FILE")
+      PREV_TX=$(sed -n '3p' "$STATE_FILE")
+    else
+      PREV_TIME=$CURRENT_TIME
+      PREV_RX=$CURRENT_RX
+      PREV_TX=$CURRENT_TX
+    fi
+    
+    TIME_DIFF=$((CURRENT_TIME - PREV_TIME))
+    
+    if [ "$TIME_DIFF" -lt 1 ]; then
+      TIME_DIFF=1
+    fi
+    
+    RX_SPEED=$(((CURRENT_RX - PREV_RX) / TIME_DIFF))
+    TX_SPEED=$(((CURRENT_TX - PREV_TX) / TIME_DIFF))
+    
+    LABEL=$(awk -v rx="$RX_SPEED" -v tx="$TX_SPEED" 'BEGIN {
+      if (tx >= 1048576) {
+        upload = sprintf("%.1fM", tx/1048576)
+      } else {
+        upload = sprintf("%.1fK", (tx + 1023)/1024)
+      }
+      if (rx >= 1048576) {
+        download = sprintf("%.1fM", rx/1048576)
+      } else {
+        download = sprintf("%.1fK", (rx + 1023)/1024)
+      }
+      print upload "↑ " download "↓"
+    }')
+    
+    echo "$CURRENT_TIME" > "$STATE_FILE"
+    echo "$CURRENT_RX" >> "$STATE_FILE"
+    echo "$CURRENT_TX" >> "$STATE_FILE"
   fi
-  
-  # Calculate time difference (update every 2 seconds)
-  CURRENT_TIME=$(date +%s)
-  TIME_DIFF=$((CURRENT_TIME - PREV_TIME))
-  
-  if [ "$TIME_DIFF" -lt 1 ]; then
-    TIME_DIFF=1
-  fi
-  
-  # Calculate speed (bytes per second)
-  RX_SPEED=$(((CURRENT_RX - PREV_RX) / TIME_DIFF))
-  TX_SPEED=$(((CURRENT_TX - PREV_TX) / TIME_DIFF))
-  
-  # Convert to human readable format (never below KB, single decimal)
-  if [ "$RX_SPEED" -ge 1048576 ]; then
-    DOWNLOAD=$(awk "BEGIN {printf \"%.1fM\", $RX_SPEED/1048576}")
-  else
-    DOWNLOAD=$(awk "BEGIN {printf \"%.1fK\", ($RX_SPEED + 1023)/1024}")
-  fi
-  
-  if [ "$TX_SPEED" -ge 1048576 ]; then
-    UPLOAD=$(awk "BEGIN {printf \"%.1fM\", $TX_SPEED/1048576}")
-  else
-    UPLOAD=$(awk "BEGIN {printf \"%.1fK\", ($TX_SPEED + 1023)/1024}")
-  fi
-  
-  # Save current values for next run
-  echo "$CURRENT_TIME" > "$STATE_FILE"
-  echo "$CURRENT_RX" >> "$STATE_FILE"
-  echo "$CURRENT_TX" >> "$STATE_FILE"
 fi
 
-sketchybar --set "$NAME" label="${UPLOAD}↑ ${DOWNLOAD}↓"
+sketchybar --set "$NAME" label="$LABEL"

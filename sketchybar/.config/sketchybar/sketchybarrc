@@ -87,7 +87,7 @@ sketchybar --add item cpu right \
 sketchybar --add item network right \
            --set network \
                  icon="NET" \
-                 script="$PLUGIN_DIR/network.sh"
+                 script="$PLUGIN_DIR/network.sh" \
                  update_freq=2
 
 sketchybar --add item weather left \
