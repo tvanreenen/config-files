@@ -80,8 +80,8 @@ END {
 }')
 
 # Set all weather items
+sketchybar --set weather_sun label="${sunrise}↑ ${sunset}↓"
 sketchybar --set weather_temp label="${temp_f_formatted}°F"
 sketchybar --set weather_dewpoint label="${dewpoint_f_formatted}°F"
-sketchybar --set weather_wind label="${wdir_formatted}° ${wspd_formatted}${wgust_str}MPH"
+sketchybar --set weather_wind label="${wdir_formatted}° ${wspd_formatted}${wgust_str}mph"
 sketchybar --set weather_pressure label="${p_inhg}\""
-sketchybar --set weather_sun label="${sunrise}↑ ${sunset}↓"

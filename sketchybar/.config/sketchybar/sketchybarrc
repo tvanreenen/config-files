@@ -32,8 +32,9 @@ default=(
 )
 sketchybar --default "${default[@]}"
 
-sketchybar --add event aerospace_workspace_change
+# Left
 
+sketchybar --add event aerospace_workspace_change
 sketchybar --add item aerospace left \
            --set aerospace \
 		             icon.drawing=off \
@@ -46,6 +47,38 @@ sketchybar --add item time left \
 		             icon.drawing=off \
                  script="$PLUGIN_DIR/time.sh" \
                  update_freq=1
+
+sketchybar --add item weather_sun left \
+           --set weather_sun \
+                 icon="S" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_temp left \
+           --set weather_temp \
+                 icon="T" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_dewpoint left \
+           --set weather_dewpoint \
+                 icon="D" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_wind left \
+           --set weather_wind \
+                 icon="W" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_pressure left \
+           --set weather_pressure \
+                 icon="P" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+# Right
 
 # sketchybar --add alias "SystemUIServer,ControlCenter" right \
 #            --set "SystemUIServer,ControlCenter"
@@ -89,36 +122,6 @@ sketchybar --add item network right \
                  icon="NET" \
                  script="$PLUGIN_DIR/network.sh" \
                  update_freq=2
-
-sketchybar --add item weather_temp left \
-           --set weather_temp \
-                 icon="T" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
-
-sketchybar --add item weather_dewpoint left \
-           --set weather_dewpoint \
-                 icon="D" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
-
-sketchybar --add item weather_wind left \
-           --set weather_wind \
-                 icon="W" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
-
-sketchybar --add item weather_pressure left \
-           --set weather_pressure \
-                 icon="P" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
-
-sketchybar --add item weather_sun left \
-           --set weather_sun \
-                 icon="S" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
 
 sketchybar --update
 
