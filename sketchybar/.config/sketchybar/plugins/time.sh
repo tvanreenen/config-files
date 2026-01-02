@@ -1,14 +1,8 @@
 #!/bin/sh
 
-# Time plugin for SketchyBar
-# Format: Single letter day, HH:MM:SS UTC±offset, yyyy-mm-dd Www
+# Format: DATE|WEEK|DAY_ABBR|TIME|OFFSET
+LABEL=$(date '+%Y-%m-%d|%V|%a|%H:%M:%S|%z' | awk -F'|' '{
+  printf "%s W%s %s %s %s", $1, $2, substr($3, 1, 1), $4, $5
+}')
 
-# Get current date and time components
-DATE=$(date '+%Y-%m-%d')
-WEEK=$(date '+%V' | awk '{printf "%02d", $1}')  # Zero-padded week
-DAY_LETTER=$(date '+%A' | cut -c1)  # First letter of day name
-TIME=$(date '+%H:%M:%S')
-UTC_OFFSET=$(date '+%z')
-
-sketchybar --set "$NAME" label="${DATE} W${WEEK} ${DAY_LETTER} ${TIME} ${UTC_OFFSET}"
-
+sketchybar --set "$NAME" label="$LABEL"
