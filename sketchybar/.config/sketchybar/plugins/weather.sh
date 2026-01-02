@@ -2,39 +2,86 @@
 
 URL="https://api.open-meteo.com/v1/forecast?latitude=42.87&longitude=-85.44&daily=sunrise,sunset&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,apparent_temperature,pressure_msl&timezone=auto&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch"
 
-json="$(curl -s "$URL")" || exit 1
+CACHE_FILE="/tmp/sketchybar_weather_cache"
+CACHE_AGE=550
 
-# Extract needed fields
-temp_f="$(printf '%s' "$json" | jq -r '.current.temperature_2m')"
-rh="$(printf '%s' "$json" | jq -r '.current.relative_humidity_2m')"
-feels_f="$(printf '%s' "$json" | jq -r '.current.apparent_temperature')"
-wspd="$(printf '%s' "$json" | jq -r '.current.wind_speed_10m')"
-wdir="$(printf '%s' "$json" | jq -r '.current.wind_direction_10m')"
-wgust="$(printf '%s' "$json" | jq -r '.current.wind_gusts_10m')"
-p_hpa="$(printf '%s' "$json" | jq -r '.current.pressure_msl')"
-sunrise="$(printf '%s' "$json" | jq -r '.daily.sunrise[0] | split("T")[1]')"
-sunset="$(printf '%s' "$json" | jq -r '.daily.sunset[0]  | split("T")[1]')"
+CURRENT_TIME=$(date +%s)
 
-# Dew point (Magnus) + pressure to inHg
-dewpoint_f="$(awk -v tf="$temp_f" -v rh="$rh" 'BEGIN{
-  # F -> C
-  T=(tf-32)*5/9;
-  RH=rh;
-  if (RH<=0) { print "nan"; exit }
-  a=17.27; b=237.7;
-  g=log(RH/100.0)+(a*T)/(b+T);
-  Td=(b*g)/(a-g);
-  # C -> F
-  printf "%.1f", Td*9/5+32
-}')"
+if [ -f "$CACHE_FILE" ]; then
+  CACHE_TIME=$(head -1 "$CACHE_FILE")
+  if [ $((CURRENT_TIME - CACHE_TIME)) -lt $CACHE_AGE ]; then
+    json=$(tail -n +2 "$CACHE_FILE")
+  else
+    json="$(curl -s "$URL")" || exit 1
+    echo "$CURRENT_TIME" > "$CACHE_FILE"
+    echo "$json" >> "$CACHE_FILE"
+  fi
+else
+  json="$(curl -s "$URL")" || exit 1
+  echo "$CURRENT_TIME" > "$CACHE_FILE"
+  echo "$json" >> "$CACHE_FILE"
+fi
 
-p_inhg="$(awk -v p="$p_hpa" 'BEGIN{ printf "%.2f", p*0.0295299830714 }')"
+# Extract all fields and format in single jq/awk pass
+eval $(echo "$json" | jq -r '
+  .current.temperature_2m,
+  .current.relative_humidity_2m,
+  .current.wind_speed_10m,
+  .current.wind_direction_10m,
+  .current.wind_gusts_10m,
+  .current.pressure_msl,
+  (.daily.sunrise[0] | split("T")[1]),
+  (.daily.sunset[0] | split("T")[1])
+' | awk '{
+  if (NR==1) temp=$1
+  if (NR==2) rh=$1
+  if (NR==3) wspd=$1
+  if (NR==4) wdir=$1
+  if (NR==5) wgust=$1
+  if (NR==6) p_hpa=$1
+  if (NR==7) sunrise=$1
+  if (NR==8) sunset=$1
+}
+END {
+  # Dew point calculation (Magnus formula)
+  T=(temp-32)*5/9;
+  if (rh>0) {
+    a=17.27; b=237.7;
+    g=log(rh/100.0)+(a*T)/(b+T);
+    Td=(b*g)/(a-g);
+    dewpoint=sprintf("%.0f", (Td*9/5+32));
+  } else {
+    dewpoint="nan";
+  }
+  
+  # METAR standard: report gusts when peak exceeds average by 10+ knots (11.5 mph)
+  # Using 12 mph threshold for simplicity
+  if (wgust - wspd >= 12) {
+    gust_str = sprintf("G%.0f", wgust)
+  } else {
+    gust_str = ""
+  }
+  
+  # Output shell variable assignments
+  printf "temp_f_formatted=\"%.0f\"; ", temp
+  printf "dewpoint_f_formatted=\"%s\"; ", dewpoint
+  printf "wdir_formatted=\"%.0f\"; ", wdir
+  printf "wspd_formatted=\"%.0f\"; ", wspd
+  printf "wgust_str=\"%s\"; ", gust_str
+  printf "p_inhg=\"%.2f\"; ", p_hpa*0.0295299830714
+  
+  # Remove zero-padding from sunrise (07:23 -> 7:23)
+  # Sunset in 24hr format is always >= 12, so no zero-padding needed
+  sunrise_hr = int(substr(sunrise, 1, 2))
+  sunrise_min = substr(sunrise, 4, 2)
+  
+  printf "sunrise=\"%d:%s\"; ", sunrise_hr, sunrise_min
+  printf "sunset=\"%s\"", sunset
+}')
 
-# Format numeric values
-temp_f_formatted="$(printf "%.0f" "$temp_f")"
-dewpoint_f_formatted="$(printf "%.0f" "$dewpoint_f")"
-wdir_formatted="$(printf "%03.0f" "$wdir")"
-wspd_formatted="$(printf "%02.0f" "$wspd")"
-wgust_formatted="$(printf "%02.0f" "$wgust")"
-
-sketchybar --set "$NAME" label="${temp_f_formatted}/${dewpoint_f_formatted}°F  ${wdir_formatted}° ${wspd_formatted}G${wgust_formatted}MPH  ${p_inhg}\"  ${sunrise}↑ ${sunset}"↓
+# Set all weather items
+sketchybar --set weather_temp label="${temp_f_formatted}°F"
+sketchybar --set weather_dewpoint label="${dewpoint_f_formatted}°F"
+sketchybar --set weather_wind label="${wdir_formatted}° ${wspd_formatted}${wgust_str}MPH"
+sketchybar --set weather_pressure label="${p_inhg}\""
+sketchybar --set weather_sun label="${sunrise}↑ ${sunset}↓"

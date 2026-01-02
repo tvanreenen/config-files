@@ -90,10 +90,35 @@ sketchybar --add item network right \
                  script="$PLUGIN_DIR/network.sh" \
                  update_freq=2
 
-sketchybar --add item weather left \
-           --set weather \
-                 update_freq=600 \
-                 script="$PLUGIN_DIR/weather.sh"
+sketchybar --add item weather_temp left \
+           --set weather_temp \
+                 icon="T" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_dewpoint left \
+           --set weather_dewpoint \
+                 icon="D" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_wind left \
+           --set weather_wind \
+                 icon="W" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_pressure left \
+           --set weather_pressure \
+                 icon="P" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
+
+sketchybar --add item weather_sun left \
+           --set weather_sun \
+                 icon="S" \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 update_freq=600
 
 sketchybar --update
 
