@@ -1,18 +1,27 @@
 #!/bin/sh
 
-# GPU plugin for SketchyBar
-# Uses ioreg to query IOKit directly for GPU utilization (fast, no sudo required)
-# Note: plutil can't convert plists with <data> elements to JSON, so we use plistlib directly
+STATE_FILE="/tmp/sketchybar_gpu_python"
+TMP_PLIST="/tmp/sketchybar_gpu.plist"
+
+if [ -f "$STATE_FILE" ]; then
+  HAS_PYTHON3=$(cat "$STATE_FILE")
+else
+  if command -v python3 >/dev/null 2>&1; then
+    HAS_PYTHON3="yes"
+    echo "yes" > "$STATE_FILE"
+  else
+    HAS_PYTHON3="no"
+    echo "no" > "$STATE_FILE"
+  fi
+fi
 
 GPU_USAGE=""
 
-# Query IOKit for GPU accelerator performance statistics
-# This uses ioreg to access IOAccelerator entries and extract GPU utilization
-if command -v python3 >/dev/null 2>&1; then
-  TMP_PLIST=$(mktemp /tmp/sketchybar_gpu.XXXXXX.plist)
+if [ "$HAS_PYTHON3" = "yes" ]; then
   ioreg -r -c IOAccelerator -a 2>/dev/null > "$TMP_PLIST"
   
   if [ -s "$TMP_PLIST" ]; then
+    # Use Python/plistlib because plutil can't convert plists with <data> elements to JSON
     GPU_USAGE=$(python3 - <<PY
 import plistlib
 with open("$TMP_PLIST", "rb") as f:
@@ -30,11 +39,8 @@ print("")
 PY
 )
   fi
-  
-  rm -f "$TMP_PLIST"
 fi
 
-# Format output: show usage percentage only
 if [ -n "$GPU_USAGE" ] && [ "$GPU_USAGE" != "" ]; then
   sketchybar --set "$NAME" label="${GPU_USAGE}%"
 else
