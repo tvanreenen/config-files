@@ -12,7 +12,6 @@ This repository contains configuration files for various tools and applications,
 ## Kept but Unused Files
 
 - **[LeaderKey](https://github.com/mikker/LeaderKey)** - Keyboard shortcut configuration (not currently in use)
-- **[Stats](https://github.com/exelban/stats)** - System monitoring preferences (not currently in use)
 
 ## Usage
 
