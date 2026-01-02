@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# SketchyBar Configuration
-# Transparent top bar for macOS Sequoia 15.1
-
 CONFIG_DIR="$HOME/.config/sketchybar"
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 
@@ -16,131 +13,94 @@ if pgrep -q sketchybar; then
   done
 fi
 
-##### Bar Appearance #####
-# Fully transparent bar with blur effect
 sketchybar --bar position=top \
                  height=32 \
-                 blur_radius=30 \
-                 color=0x00000000 \
                  margin=0 \
                  sticky=on \
-                 topmost=on \
+                 topmost=off \
                  shadow=off
 
-##### Default Item Properties #####
-# All widgets inherit these defaults - fonts are normalized to SF Pro Regular 11.0
 default=(
-  padding_left=8
-  padding_right=8
-  label.font="SF Pro:Regular:11.0"
-  label.color=0xffffffff
+  padding_left=4
+  padding_right=4
+  icon.font="SF Pro:Regular:9.0"
+  icon.color="0x99FFFFFF"
+  label.font="SF Pro:Regular:12.0"
   label.padding_left=4
   label.padding_right=4
-  label.y_offset=0
-  background.height=32
-  background.corner_radius=4
-  background.color=0x40000000
   background.drawing=off
-  icon.drawing=off
 )
 sketchybar --default "${default[@]}"
 
-##### Add Front App Widget (Left Side) #####
-sketchybar --add item front_app left \
-           --set front_app \
-                 icon.drawing=off \
-                 label.font="SF Pro:Bold:11.0" \
-                 script="$PLUGIN_DIR/front_app.sh" \
-                 background.drawing=off \
-           --subscribe front_app front_app_switched
+# sketchybar --add item front_app left \
+#            --set front_app \
+# 		             icon.drawing=off \
+#   		           label.font="SF Pro:Regular:14.0" \
+#                  script="$PLUGIN_DIR/front_app.sh" \
+#            --subscribe front_app front_app_switched
 
-##### Add AeroSpace Workspace Widget (Left Side) #####
-# Register event for workspace changes from AeroSpace
 sketchybar --add event aerospace_workspace_change
 
 sketchybar --add item aerospace left \
            --set aerospace \
-                 icon.drawing=off \
-                 update_freq=2 \
+		             icon.drawing=off \
                  script="$PLUGIN_DIR/aerospace.sh" \
-                 background.drawing=off \
+                 update_freq=2 \
            --subscribe aerospace aerospace_workspace_change
 
-##### Add Time Widget (Left Side) #####
 sketchybar --add item time left \
            --set time \
-                 icon.drawing=off \
-                 update_freq=1 \
+		             icon.drawing=off \
                  script="$PLUGIN_DIR/time.sh" \
-                 background.drawing=off
+                 update_freq=1
 
-##### Add System Aliases (Control Center, Apple Passwords) #####
-# These keep native macOS menu bar items accessible
-# NOTE: Requires Screen Recording permissions in System Settings
-# Format: "SystemUIServer,ItemName"
-# Temporarily disabled - uncomment after granting Screen Recording permissions
 # sketchybar --add alias "SystemUIServer,ControlCenter" right \
-#            --set "SystemUIServer,ControlCenter" \
-#                  icon.drawing=on \
-#                  label.drawing=off \
-#                  background.drawing=off
-#
-# sketchybar --add alias "SystemUIServer,Passwords" right \
-#            --set "SystemUIServer,Passwords" \
-#                  icon.drawing=on \
-#                  label.drawing=off \
-#                  background.drawing=off
+#            --set "SystemUIServer,ControlCenter"
 
-##### Add Battery Widget #####
+# sketchybar --add alias "SystemUIServer,Passwords" right \
+#            --set "SystemUIServer,Passwords"
+
 sketchybar --add item battery right \
            --set battery \
-                 icon.drawing=off \
-                 update_freq=60 \
+                 icon="BAT" \
                  script="$PLUGIN_DIR/battery.sh" \
-                 background.drawing=off \
+                 update_freq=60 \
            --subscribe battery system_woke power_source_change
 
-##### Add SSD Widget #####
 sketchybar --add item ssd right \
            --set ssd \
-                 icon.drawing=off \
-                 update_freq=60 \
-                 script="$PLUGIN_DIR/ssd.sh" \
-                 background.drawing=off
+                 icon="SSD" \
+		             script="$PLUGIN_DIR/ssd.sh" \
+                 update_freq=60
 
-##### Add RAM Widget #####
 sketchybar --add item ram right \
            --set ram \
-                 icon.drawing=off \
-                 update_freq=2 \
+		             icon="RAM" \
                  script="$PLUGIN_DIR/ram.sh" \
-                 background.drawing=off
+                 update_freq=2
 
-##### Add GPU Widget #####
 sketchybar --add item gpu right \
            --set gpu \
-                 icon.drawing=off \
-                 update_freq=2 \
+		             icon="GPU" \
                  script="$PLUGIN_DIR/gpu.sh" \
-                 background.drawing=off
+                 update_freq=2
 
-##### Add CPU Widget #####
 sketchybar --add item cpu right \
            --set cpu \
-                 icon.drawing=off \
-                 update_freq=2 \
-                 script="$PLUGIN_DIR/cpu.sh" \
-                 background.drawing=off
+                 icon="CPU" \
+		             script="$PLUGIN_DIR/cpu.sh" \
+                 update_freq=2
 
-##### Add Network Widget #####
 sketchybar --add item network right \
            --set network \
-                 icon.drawing=off \
-                 label.y_offset=0 \
-                 update_freq=2 \
-                 script="$PLUGIN_DIR/network.sh" \
-                 background.drawing=off
+                 icon="NET" \
+                 script="$PLUGIN_DIR/network.sh"
+                 update_freq=2
 
-##### Force Initial Update #####
+sketchybar --add item weather left \
+           --set weather \
+                 update_freq=600 \
+                 script="$PLUGIN_DIR/weather.sh"
+
 sketchybar --update
 

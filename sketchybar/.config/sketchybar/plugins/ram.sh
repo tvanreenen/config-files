@@ -40,4 +40,4 @@ fi
 # Calculate percentage
 PERCENT=$((USED_MB * 100 / TOTAL_PHYSICAL_MB))
 
-sketchybar --set "$NAME" label="RAM ${PERCENT}%"
+sketchybar --set "$NAME" label="${PERCENT}%"

@@ -19,5 +19,5 @@ fi
 # Round to integer
 CPU_USAGE=$(printf "%.0f" "$CPU_USAGE" 2>/dev/null || echo "0")
 
-sketchybar --set "$NAME" label="CPU ${CPU_USAGE}%"
+sketchybar --set "$NAME" label="${CPU_USAGE}%"
 

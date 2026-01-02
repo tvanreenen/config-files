@@ -15,7 +15,7 @@ if [ -z "$INTERFACE" ]; then
   elif ifconfig en1 2>/dev/null | grep -q "status: active"; then
     INTERFACE="en1"
   else
-    sketchybar --set "$NAME" label="No connection"
+    sketchybar --set "$NAME" label="--"
     exit 0
   fi
 fi
@@ -70,4 +70,4 @@ else
   echo "$CURRENT_TX" >> "$STATE_FILE"
 fi
 
-sketchybar --set "$NAME" label="${UPLOAD} ${DOWNLOAD}"
+sketchybar --set "$NAME" label="${UPLOAD}↑ ${DOWNLOAD}↓"

@@ -36,7 +36,7 @@ fi
 
 # Format output: show usage percentage only
 if [ -n "$GPU_USAGE" ] && [ "$GPU_USAGE" != "" ]; then
-  sketchybar --set "$NAME" label="GPU ${GPU_USAGE}%"
+  sketchybar --set "$NAME" label="${GPU_USAGE}%"
 else
-  sketchybar --set "$NAME" label="GPU --"
+  sketchybar --set "$NAME" label="--"
 fi

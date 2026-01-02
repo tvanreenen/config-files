@@ -24,7 +24,7 @@ CONSUMED_BYTES=$(echo "$APFS_INFO" | awk '/Physical Store/,0' | grep "Capacity C
 
 if [ -n "$SIZE_BYTES" ] && [ "$SIZE_BYTES" -gt 0 ] && [ -n "$CONSUMED_BYTES" ]; then
   USAGE=$((CONSUMED_BYTES * 100 / SIZE_BYTES))
-  sketchybar --set "$NAME" label="SSD ${USAGE}%"
+  sketchybar --set "$NAME" label="${USAGE}%"
 else
-  sketchybar --set "$NAME" label="SSD N/A"
+  sketchybar --set "$NAME" label="--"
 fi
