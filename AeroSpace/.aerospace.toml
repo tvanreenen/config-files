@@ -88,7 +88,7 @@ on-mode-changed = []
     inner.vertical =   0
     outer.left =       0
     outer.bottom =     0
-    outer.top =        32
+    outer.top =        [{ monitor."Built-in Retina Display" = 0 }, 32]
     outer.right =      0
 
 # 'main' binding mode declaration
