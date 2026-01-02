@@ -31,8 +31,10 @@ dewpoint_f="$(awk -v tf="$temp_f" -v rh="$rh" 'BEGIN{
 p_inhg="$(awk -v p="$p_hpa" 'BEGIN{ printf "%.2f", p*0.0295299830714 }')"
 
 # Format numeric values
-temp_f_formatted="$(printf "%.1f" "$temp_f")"
-wspd_formatted="$(printf "%.1f" "$wspd")"
-wgust_formatted="$(printf "%.1f" "$wgust")"
+temp_f_formatted="$(printf "%.0f" "$temp_f")"
+dewpoint_f_formatted="$(printf "%.0f" "$dewpoint_f")"
+wdir_formatted="$(printf "%03.0f" "$wdir")"
+wspd_formatted="$(printf "%02.0f" "$wspd")"
+wgust_formatted="$(printf "%02.0f" "$wgust")"
 
-sketchybar --set "$NAME" label="${temp_f_formatted}°/${dewpoint_f}°  ${wspd_formatted}@${wdir}° G${wgust_formatted}  ${p_inhg}\"  ${sunrise}↑ ${sunset}"↓
+sketchybar --set "$NAME" label="${temp_f_formatted}/${dewpoint_f_formatted}°F  ${wdir_formatted}° ${wspd_formatted}G${wgust_formatted}MPH  ${p_inhg}\"  ${sunrise}↑ ${sunset}"↓
