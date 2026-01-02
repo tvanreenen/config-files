@@ -4,20 +4,38 @@
 # Shows upload/download speeds in single line format
 
 STATE_FILE="/tmp/sketchybar_network_state"
+INTERFACE_FILE="/tmp/sketchybar_network_interface"
 
-# Get network interface (WiFi or Ethernet)
-INTERFACE=$(route get default 2>/dev/null | grep interface | awk '{print $2}')
+# Cache network interface (rarely changes, re-check every 60 seconds)
+INTERFACE=""
+if [ -f "$INTERFACE_FILE" ]; then
+  INTERFACE_CACHE_TIME=$(head -1 "$INTERFACE_FILE")
+  CURRENT_TIME=$(date +%s)
+  # Re-check interface every 60 seconds
+  if [ $((CURRENT_TIME - INTERFACE_CACHE_TIME)) -lt 60 ]; then
+    INTERFACE=$(sed -n '2p' "$INTERFACE_FILE")
+  fi
+fi
 
 if [ -z "$INTERFACE" ]; then
-  # Fallback: check common interfaces
-  if ifconfig en0 2>/dev/null | grep -q "status: active"; then
-    INTERFACE="en0"
-  elif ifconfig en1 2>/dev/null | grep -q "status: active"; then
-    INTERFACE="en1"
-  else
-    sketchybar --set "$NAME" label="--"
-    exit 0
+  # Get network interface (WiFi or Ethernet)
+  INTERFACE=$(route get default 2>/dev/null | grep interface | awk '{print $2}')
+  
+  if [ -z "$INTERFACE" ]; then
+    # Fallback: check common interfaces
+    if ifconfig en0 2>/dev/null | grep -q "status: active"; then
+      INTERFACE="en0"
+    elif ifconfig en1 2>/dev/null | grep -q "status: active"; then
+      INTERFACE="en1"
+    else
+      sketchybar --set "$NAME" label="--"
+      exit 0
+    fi
   fi
+  
+  # Cache interface with timestamp
+  echo "$(date +%s)" > "$INTERFACE_FILE"
+  echo "$INTERFACE" >> "$INTERFACE_FILE"
 fi
 
 # Get current byte counts from netstat
