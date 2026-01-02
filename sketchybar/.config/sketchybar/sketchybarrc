@@ -39,7 +39,6 @@ sketchybar --add item aerospace left \
            --set aerospace \
 		             icon.drawing=off \
                  script="$PLUGIN_DIR/aerospace.sh" \
-                 update_freq=2 \
            --subscribe aerospace aerospace_workspace_change
 
 sketchybar --add item time left \
@@ -103,25 +102,25 @@ sketchybar --add item ram right \
            --set ram \
 		             icon="RAM" \
                  script="$PLUGIN_DIR/ram.sh" \
-                 update_freq=2
+                 update_freq=3
 
 sketchybar --add item gpu right \
            --set gpu \
 		             icon="GPU" \
                  script="$PLUGIN_DIR/gpu.sh" \
-                 update_freq=2
+                 update_freq=3
 
 sketchybar --add item cpu right \
            --set cpu \
                  icon="CPU" \
 		             script="$PLUGIN_DIR/cpu.sh" \
-                 update_freq=2
+                 update_freq=3
 
 sketchybar --add item network right \
            --set network \
                  icon="NET" \
                  script="$PLUGIN_DIR/network.sh" \
-                 update_freq=2
+                 update_freq=3
 
 sketchybar --update
 

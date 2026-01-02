@@ -9,7 +9,17 @@ if ! command -v aerospace >/dev/null 2>&1; then
   exit 0
 fi
 
-MONITOR_COUNT=$(aerospace list-monitors 2>/dev/null | wc -l | tr -d ' ')
+# Cache monitor list (only refresh every 30 seconds)
+MONITOR_CACHE_FILE="/tmp/sketchybar_aerospace_monitors"
+
+if [ -f "$MONITOR_CACHE_FILE" ] && [ "$(find "$MONITOR_CACHE_FILE" -newermt '30 seconds ago' 2>/dev/null)" ]; then
+  MONITOR_LIST=$(cat "$MONITOR_CACHE_FILE")
+else
+  MONITOR_LIST=$(aerospace list-monitors 2>/dev/null)
+  echo "$MONITOR_LIST" > "$MONITOR_CACHE_FILE"
+fi
+
+MONITOR_COUNT=$(echo "$MONITOR_LIST" | wc -l | tr -d ' ')
 
 # Single monitor: just show the focused workspace
 if [ "$MONITOR_COUNT" -eq 1 ]; then
@@ -25,7 +35,7 @@ fi
 # Multiple monitors: show all workspaces
 WORKSPACES=""
 
-for monitor in $(aerospace list-monitors 2>/dev/null | awk '{print $1}'); do
+for monitor in $(echo "$MONITOR_LIST" | awk '{print $1}'); do
   [ -z "$monitor" ] && continue
   
   WORKSPACE=$(aerospace list-workspaces --visible --monitor "$monitor" 2>/dev/null | head -1 | awk '{print $1}')
