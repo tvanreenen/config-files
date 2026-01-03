@@ -2,3 +2,12 @@
 
 [gcloud]
 disabled = true
+
+[aws]
+disabled = true
+
+[azure]
+disabled = true
+
+[openstack]
+disabled = true
