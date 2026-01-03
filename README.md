@@ -9,10 +9,6 @@ This repository contains configuration files for various tools and applications,
 - **[Starship](https://starship.rs/)** - Cross-shell prompt
 - **[AeroSpace](https://github.com/nikitabobko/AeroSpace)** - i3-like tiling window manager for macOS
 
-## Kept but Unused Files
-
-- **[LeaderKey](https://github.com/mikker/LeaderKey)** - Keyboard shortcut configuration (not currently in use)
-
 ## Usage
 
 Install configurations using [`just`](https://github.com/casey/just):
