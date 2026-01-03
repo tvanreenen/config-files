@@ -10,16 +10,20 @@ CURRENT_TIME=$(date +%s)
 if [ -f "$CACHE_FILE" ]; then
   CACHE_TIME=$(head -1 "$CACHE_FILE")
   if [ $((CURRENT_TIME - CACHE_TIME)) -lt $CACHE_AGE ]; then
-    json=$(tail -n +2 "$CACHE_FILE")
+    json=$(tail -n +2 "$CACHE_FILE" | head -1)
   else
-    json="$(curl -s "$URL")" || exit 1
-    echo "$CURRENT_TIME" > "$CACHE_FILE"
-    echo "$json" >> "$CACHE_FILE"
+    json="$(curl -s --max-time 5 --connect-timeout 3 "$URL")" || exit 1
+    {
+      echo "$CURRENT_TIME"
+      echo "$json"
+    } > "$CACHE_FILE"
   fi
 else
-  json="$(curl -s "$URL")" || exit 1
-  echo "$CURRENT_TIME" > "$CACHE_FILE"
-  echo "$json" >> "$CACHE_FILE"
+  json="$(curl -s --max-time 5 --connect-timeout 3 "$URL" 2>/dev/null)" || exit 1
+  {
+    echo "$CURRENT_TIME"
+    echo "$json"
+  } > "$CACHE_FILE"
 fi
 
 # Extract all fields and format in single jq/awk pass
