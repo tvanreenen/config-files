@@ -94,6 +94,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 alias ls='ls -G'
 alias ll='ls -lhG'
 alias la='ls -lahG'
+alias cl='clear'
 
 # ————————————————————————————————————————————————————————————————
 # Interactive Shell Features
