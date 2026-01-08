@@ -100,60 +100,6 @@ alias la='ls -lahG'
 # ————————————————————————————————————————————————————————————————
 
 # ————————————————————————————————————————————————————————————————
-# Vim key bindings
-# - Enable vi mode for command-line editing (insert mode by default).
-# - Press ESC to enter normal mode, 'i' or 'a' to return to insert mode.
-# - In normal mode: h/j/k/l for navigation, 'A' to append at end, etc.
-# - Cursor changes: block cursor in normal mode, line cursor in insert mode.
-# ————————————————————————————————————————————————————————————————
-bindkey -v
-
-# Reduce escape key delay (KEYTIMEOUT is in 1/100 of a second)
-# Setting to 1 means 10ms wait time for multi-character sequences
-# This makes ESC key response nearly instantaneous
-KEYTIMEOUT=1
-
-# Fix ESC key behavior in vicmd mode
-# Without this, pressing ESC multiple times can cause issues
-noop() { }
-zle -N noop
-bindkey -M vicmd '\e' noop
-
-# History search bindings (vi-style)
-# / for forward search, ? for backward search
-bindkey -M vicmd '/' history-incremental-search-forward
-bindkey -M vicmd '?' history-incremental-search-backward
-
-# Edit command line in external editor (v in normal mode)
-# Opens current command line in $EDITOR
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-
-# Fix Ctrl-U in insert mode (kill-line backward)
-# This ensures Ctrl-U works correctly in insert mode
-bindkey -M viins '^U' backward-kill-line
-
-# Set vi mode cursor styles for visual feedback
-# Only apply cursor changes if terminal supports it
-zle-keymap-select() {
-  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-    # Block cursor in normal mode
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} == '' ]] || [[ $1 = 'beam' ]]; then
-    # Line cursor in insert mode
-    echo -ne '\e[5 q'
-  fi
-}
-zle-line-init() {
-  zle -K viins
-  # Start in insert mode with line cursor
-  echo -ne '\e[5 q'
-}
-zle -N zle-keymap-select
-zle -N zle-line-init
-
-# ————————————————————————————————————————————————————————————————
 # Starship prompt
 # - Cross-shell prompt that displays git status, language versions, and more.
 # - Fast, customizable, and works across different shells.
@@ -180,6 +126,16 @@ fi
 
 # (Optional) customize fzf interface — nice defaults
 # export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --info=inline"
+
+# ————————————————————————————————————————————————————————————————
+# zsh-vi-mode
+# - Enhanced vi mode for zsh with better key bindings and features.
+# - Provides improved vim-like editing experience in the command line.
+# - Must be loaded before zsh-autosuggestions and zsh-syntax-highlighting.
+# ————————————————————————————————————————————————————————————————
+if [[ -f /opt/homebrew/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]]; then
+  source /opt/homebrew/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+fi
 
 # ————————————————————————————————————————————————————————————————
 # zsh-autosuggestions
