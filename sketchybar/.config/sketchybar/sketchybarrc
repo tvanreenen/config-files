@@ -122,5 +122,11 @@ sketchybar --add item network right \
                  script="$PLUGIN_DIR/network.sh" \
                  update_freq=3
 
+sketchybar --add item api_monitor right \
+           --set api_monitor \
+                 icon="API" \
+                 script="$PLUGIN_DIR/api-monitor.sh" \
+                 update_freq=3600
+
 sketchybar --update
 

@@ -1,6 +1,16 @@
 #!/bin/sh
 
-URL="https://api.open-meteo.com/v1/forecast?latitude=42.87&longitude=-85.44&daily=sunrise,sunset&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,apparent_temperature,pressure_msl&timezone=auto&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch"
+# Load configuration
+CONFIG_FILE="$HOME/.config/sketchybar/config.sh"
+if [ -f "$CONFIG_FILE" ]; then
+  . "$CONFIG_FILE"
+fi
+
+# Use GPS coordinates from config
+LATITUDE="$WEATHER_LATITUDE"
+LONGITUDE="$WEATHER_LONGITUDE"
+
+URL="https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&daily=sunrise,sunset&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,apparent_temperature,pressure_msl&timezone=auto&forecast_days=1&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch"
 
 CACHE_FILE="/tmp/sketchybar_weather_cache"
 CACHE_AGE=550
