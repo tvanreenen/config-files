@@ -5,9 +5,12 @@
 
 # Load configuration
 CONFIG_FILE="$HOME/.config/sketchybar/config.sh"
-if [ -f "$CONFIG_FILE" ]; then
-  . "$CONFIG_FILE"
+if [ ! -f "$CONFIG_FILE" ]; then
+  sketchybar --set "$NAME" label="-"
+  exit 0
 fi
+
+. "$CONFIG_FILE"
 
 # Function to check if an API is up
 check_api() {
