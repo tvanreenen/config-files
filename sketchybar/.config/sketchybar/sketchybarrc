@@ -13,12 +13,15 @@ if pgrep -q sketchybar; then
   done
 fi
 
-sketchybar --bar position=top \
-                 height=32 \
-                 margin=0 \
-                 sticky=on \
-                 topmost=off \
-                 shadow=off
+bar=(
+  position=top
+  height=32
+  margin=0
+  sticky=on
+  topmost=off
+  shadow=off
+)
+sketchybar --bar "${bar[@]}"
 
 default=(
   padding_left=4
@@ -37,13 +40,13 @@ sketchybar --default "${default[@]}"
 sketchybar --add event aerospace_workspace_change
 sketchybar --add item aerospace left \
            --set aerospace \
-		             icon.drawing=off \
+		     icon.drawing=off \
                  script="$PLUGIN_DIR/aerospace.sh" \
            --subscribe aerospace aerospace_workspace_change
 
 sketchybar --add item time left \
            --set time \
-		             icon.drawing=off \
+		     icon.drawing=off \
                  script="$PLUGIN_DIR/time.sh" \
                  update_freq=1
 
@@ -79,12 +82,6 @@ sketchybar --add item weather_pressure left \
 
 # Right
 
-# sketchybar --add alias "SystemUIServer,ControlCenter" right \
-#            --set "SystemUIServer,ControlCenter"
-
-# sketchybar --add alias "SystemUIServer,Passwords" right \
-#            --set "SystemUIServer,Passwords"
-
 sketchybar --add item battery right \
            --set battery \
                  icon="BAT" \
@@ -95,25 +92,25 @@ sketchybar --add item battery right \
 sketchybar --add item ssd right \
            --set ssd \
                  icon="SSD" \
-		             script="$PLUGIN_DIR/ssd.sh" \
+		     script="$PLUGIN_DIR/ssd.sh" \
                  update_freq=60
 
 sketchybar --add item ram right \
            --set ram \
-		             icon="RAM" \
+		     icon="RAM" \
                  script="$PLUGIN_DIR/ram.sh" \
                  update_freq=3
 
 sketchybar --add item gpu right \
            --set gpu \
-		             icon="GPU" \
+		     icon="GPU" \
                  script="$PLUGIN_DIR/gpu.sh" \
                  update_freq=3
 
 sketchybar --add item cpu right \
            --set cpu \
                  icon="CPU" \
-		             script="$PLUGIN_DIR/cpu.sh" \
+		     script="$PLUGIN_DIR/cpu.sh" \
                  update_freq=3
 
 sketchybar --add item network right \
@@ -129,4 +126,3 @@ sketchybar --add item api_monitor right \
                  update_freq=3600
 
 sketchybar --update
-
