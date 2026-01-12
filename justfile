@@ -19,6 +19,12 @@ install-aerospace:
 	brew install --cask nikitabobko/tap/aerospace
 	stow AeroSpace
 
+install-nvim:
+	brew install neovim
+	stow nvim
+	git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
+	rm -rf ~/.config/nvim/.git
+
 dry-run PACKAGE:
 	stow -n -v {{PACKAGE}}
 

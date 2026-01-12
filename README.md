@@ -8,6 +8,7 @@ This repository contains configuration files for various tools and applications,
 - **[Ghostty](https://github.com/mitchellh/ghostty)** - Terminal emulator configuration
 - **[Starship](https://starship.rs/)** - Cross-shell prompt
 - **[AeroSpace](https://github.com/nikitabobko/AeroSpace)** - i3-like tiling window manager for macOS
+- **[Neovim](https://neovim.io/)** - Hyperextensible Vim-based text editor
 
 ## Usage
 
@@ -18,6 +19,12 @@ just install-sketchybar
 just install-ghostty
 just install-starship
 just install-aerospace
+just install-nvim
+```
+
+If you already have Neovim configured, use `adopt-nvim` to adopt existing config:
+```bash
+just adopt-nvim
 ```
 
 Each command installs the tool via Homebrew and then runs `stow` to symlink the configuration files.
