@@ -26,6 +26,7 @@ brew "felixkratz/formulae/sketchybar"
 brew "jq"
 brew "mkcert"
 brew "terraform"
+brew "wget"
 brew "azure-cli"
 
 # ============================================================================
