@@ -28,6 +28,7 @@ brew "mkcert"
 brew "terraform"
 brew "wget"
 brew "azure-cli"
+brew "mac-cleanup-go"
 
 # ============================================================================
 # CASKS (GUI Applications)
