@@ -98,6 +98,17 @@ alias la='ls -lahG'
 alias cl='clear'
 
 # ————————————————————————————————————————————————————————————————
+# Git helpers
+# ————————————————————————————————————————————————————————————————
+
+# Fuzzy-select a git worktree and cd into it (requires fzf).
+wtgo() {
+  local wt_path
+  wt_path=$(git worktree list | fzf | awk '{print $1}')
+  [ -n "$wt_path" ] && cd "$wt_path"
+}
+
+# ————————————————————————————————————————————————————————————————
 # Interactive Shell Features
 # ————————————————————————————————————————————————————————————————
 
