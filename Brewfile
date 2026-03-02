@@ -6,7 +6,7 @@
 # ============================================================================
 tap "felixkratz/formulae"
 tap "hashicorp/tap"
-tap "nikitabobko/tap"
+tap "tvanreenen/tap"
 
 # ============================================================================
 # FORMULAE (Command-line tools)
@@ -15,6 +15,7 @@ tap "nikitabobko/tap"
 brew "node"
 brew "starship"
 brew "fzf"
+brew "gh"
 brew "just"
 brew "neovim"
 brew "stow"
@@ -35,7 +36,7 @@ brew "mac-cleanup-go"
 # ============================================================================
 
 cask "ghostty"
-cask "nikitabobko/tap/aerospace"
+cask "tvanreenen/tap/frame"
 cask "docker-desktop"
 cask "cursor"
 cask "github"
@@ -56,3 +57,4 @@ cask "git-credential-manager"
 cask "loopback"
 cask "fission"
 cask "audio-hijack"
+cask "claude-code"

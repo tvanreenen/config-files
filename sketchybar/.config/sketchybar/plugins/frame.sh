@@ -1,21 +1,21 @@
 #!/bin/sh
 
-# AeroSpace workspace indicator plugin for SketchyBar
+# Frame workspace indicator plugin for SketchyBar
 # Single monitor: shows just the workspace number
 # Multiple monitors: shows all workspaces separated by pipe
 
-if ! command -v aerospace >/dev/null 2>&1; then
+if ! command -v frame >/dev/null 2>&1; then
   sketchybar --set "$NAME" label="--"
   exit 0
 fi
 
 # Cache monitor list (only refresh every 30 seconds)
-MONITOR_CACHE_FILE="/tmp/sketchybar_aerospace_monitors"
+MONITOR_CACHE_FILE="/tmp/sketchybar_frame_monitors"
 
 if [ -f "$MONITOR_CACHE_FILE" ] && [ "$(find "$MONITOR_CACHE_FILE" -newermt '30 seconds ago' 2>/dev/null)" ]; then
   MONITOR_LIST=$(cat "$MONITOR_CACHE_FILE")
 else
-  MONITOR_LIST=$(aerospace list-monitors 2>/dev/null)
+  MONITOR_LIST=$(frame list-monitors 2>/dev/null)
   echo "$MONITOR_LIST" > "$MONITOR_CACHE_FILE"
 fi
 
@@ -23,7 +23,7 @@ MONITOR_COUNT=$(echo "$MONITOR_LIST" | wc -l | tr -d ' ')
 
 # Single monitor: just show the focused workspace
 if [ "$MONITOR_COUNT" -eq 1 ]; then
-  WORKSPACE=$(aerospace list-workspaces --focused 2>/dev/null | head -1 | awk '{print $1}')
+  WORKSPACE=$(frame list-workspaces --monitor focused --visible 2>/dev/null | head -1 | awk '{print $1}')
   if [ -n "$WORKSPACE" ]; then
     sketchybar --set "$NAME" label="$WORKSPACE"
   else
@@ -38,7 +38,7 @@ WORKSPACES=""
 for monitor in $(echo "$MONITOR_LIST" | awk '{print $1}'); do
   [ -z "$monitor" ] && continue
   
-  WORKSPACE=$(aerospace list-workspaces --visible --monitor "$monitor" 2>/dev/null | head -1 | awk '{print $1}')
+  WORKSPACE=$(frame list-workspaces --visible --monitor "$monitor" 2>/dev/null | head -1 | awk '{print $1}')
   [ -z "$WORKSPACE" ] && continue
   
   [ -n "$WORKSPACES" ] && WORKSPACES="${WORKSPACES} | "

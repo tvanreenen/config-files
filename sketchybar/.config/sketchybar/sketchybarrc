@@ -37,12 +37,12 @@ sketchybar --default "${default[@]}"
 
 # Left
 
-sketchybar --add event aerospace_workspace_change
-sketchybar --add item aerospace left \
-           --set aerospace \
+sketchybar --add event frame_workspace_change
+sketchybar --add item frame left \
+           --set frame \
 		     icon.drawing=off \
-                 script="$PLUGIN_DIR/aerospace.sh" \
-           --subscribe aerospace aerospace_workspace_change
+                 script="$PLUGIN_DIR/frame.sh" \
+           --subscribe frame frame_workspace_change
 
 sketchybar --add item time left \
            --set time \
