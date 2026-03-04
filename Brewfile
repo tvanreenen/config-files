@@ -30,6 +30,8 @@ brew "terraform"
 brew "wget"
 brew "azure-cli"
 brew "mac-cleanup-go"
+brew "llm"
+brew "worktrunk"
 
 # ============================================================================
 # CASKS (GUI Applications)
