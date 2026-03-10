@@ -80,6 +80,15 @@ sketchybar --add item weather_pressure left \
                  script="$PLUGIN_DIR/weather.sh" \
                  update_freq=600
 
+sketchybar --add item weather_summary left \
+           --set weather_summary \
+                 icon="🌡️" \
+                 label.drawing=off \
+                 script="$PLUGIN_DIR/weather.sh" \
+                 popup.background.color=0xff000000 \
+                 popup.height=32 \
+           --subscribe weather_summary mouse.clicked
+
 # Right
 
 sketchybar --add item battery right \
