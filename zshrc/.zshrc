@@ -101,12 +101,8 @@ alias cl='clear'
 # Git helpers
 # ————————————————————————————————————————————————————————————————
 
-# Fuzzy-select a git worktree and cd into it (requires fzf).
-wtgo() {
-  local wt_path
-  wt_path=$(git worktree list | fzf | awk '{print $1}')
-  [ -n "$wt_path" ] && cd "$wt_path"
-}
+alias gl='git log --oneline'
+alias gs='git status'
 
 # ————————————————————————————————————————————————————————————————
 # Interactive Shell Features
@@ -173,3 +169,5 @@ fi
 if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
