@@ -12,6 +12,12 @@ fi
 
 . "$CONFIG_FILE"
 
+DOWN_FLAG="${TMPDIR:-/tmp}/sketchybar-api-monitor-down"
+
+send_notification() {
+  osascript -e 'display notification "One or more API checks failed" with title "API Monitor"' >/dev/null 2>&1
+}
+
 # Function to check if an API is up
 check_api() {
   local url=$1
@@ -101,6 +107,13 @@ done < <(echo "$API_MONITOR_CONFIG" | jq -r 'to_entries[] | "\(.key)|\(.value)"'
 if [ $idx -eq 0 ]; then
   sketchybar --set "$NAME" label="⚠️"
   exit 0
+fi
+
+if [ "$all_up" = true ]; then
+  rm -f "$DOWN_FLAG"
+elif [ ! -f "$DOWN_FLAG" ]; then
+  send_notification
+  : > "$DOWN_FLAG"
 fi
 
 # Update main item with aggregate status
