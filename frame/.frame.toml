@@ -7,7 +7,7 @@ workspace-change-hook = ['/bin/bash', '-c', 'sketchybar --trigger frame_workspac
     inner.vertical =   8
     outer.left =       8
     outer.bottom =     8
-    outer.top =        8
+    outer.top =        [{ monitor."Built-in Retina Display" = 8 }, 40]
     outer.right =      8
 
 [binding]
