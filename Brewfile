@@ -32,6 +32,7 @@ brew "azure-cli"
 brew "mac-cleanup-go"
 brew "llm"
 brew "worktrunk"
+brew "uv"
 
 # ============================================================================
 # CASKS (GUI Applications)
