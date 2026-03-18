@@ -56,3 +56,4 @@ workspace-change-hook = ['/bin/bash', '-c', 'sketchybar --trigger frame_workspac
 
     # Fullscreen toggle
     alt-f = 'fullscreen'
+    alt-shift-d = "debug-window-events"
