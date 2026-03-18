@@ -103,6 +103,7 @@ alias cl='clear'
 
 alias gl='git log --oneline'
 alias gs='git status'
+alias ghb='gh browse --branch $(git branch --show-current)'
 
 # ————————————————————————————————————————————————————————————————
 # Interactive Shell Features
