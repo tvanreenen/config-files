@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prepare PR Artifacts"
+  short_description: "Draft PR copy and squash merge messages"
+  default_prompt: "Use $prepare-pr-artifacts to inspect this branch and draft a PR title, PR description, and detailed squash merge commit message."
