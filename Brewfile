@@ -41,7 +41,6 @@ brew "zsh-vi-mode"
 # CASKS (GUI Applications)
 # ============================================================================
 
-cask "appcleaner"
 cask "audio-hijack"
 cask "chatgpt"
 cask "claude-code"
@@ -68,3 +67,6 @@ cask "slack"
 cask "tvanreenen/tap/frame"
 cask "tvanreenen/tap/key"
 cask "whatsapp"
+cask "visual-studio-code"
+brew "pnpm"
+brew "rg"

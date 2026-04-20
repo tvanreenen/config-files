@@ -102,8 +102,18 @@ alias cl='clear'
 # ————————————————————————————————————————————————————————————————
 
 alias gl='git log --oneline'
+alias gd='git diff'
 alias gs='git status'
 alias ghb='gh browse --branch $(git branch --show-current)'
+
+# ————————————————————————————————————————————————————————————————
+# Rich CLI (https://github.com/Textualize/rich)
+# ————————————————————————————————————————————————————————————————
+# Pager + left align; pass a path, URL, “-” for stdin, or extra rich flags first.
+r() {
+  rich --pager --left "$@"
+}
+compdef '_files' r
 
 # ————————————————————————————————————————————————————————————————
 # Key helpers
