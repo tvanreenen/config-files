@@ -117,8 +117,12 @@ elif [ ! -f "$DOWN_FLAG" ]; then
 fi
 
 # Update main item with aggregate status
-status_color=$(get_status_color "$all_up")
+if [ "$all_up" = true ]; then
+  status_color="0xFFFFFFFF"
+else
+  status_color=$(get_status_color "$all_up")
+fi
 sketchybar --set "$NAME" \
-  label="⏺" \
+  label="$(date +%H:%M)" \
   label.color=$status_color \
   label.drawing=on
