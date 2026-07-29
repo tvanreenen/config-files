@@ -29,6 +29,15 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "/Users/tim.vanreenen/.bun/_bun" ] && source "/Users/tim.vanreenen/.bun/_bun"
 
 # ————————————————————————————————————————————————————————————————
+# Fast Node Manager (fnm)
+# - Manages Node.js versions and switches automatically for projects that
+#   provide a .node-version or .nvmrc file.
+# ————————————————————————————————————————————————————————————————
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell zsh --version-file-strategy=recursive)"
+fi
+
+# ————————————————————————————————————————————————————————————————
 # Google Cloud SDK
 # - Updates PATH and enables shell command completion for gcloud.
 # - Only loads if the SDK is installed at the expected location.
