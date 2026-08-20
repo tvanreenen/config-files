@@ -41,8 +41,8 @@ Only create, open, or publish the PR when the user explicitly requests it.
 2. For any other provider, return the draft title and description and explain that publication was not attempted because this skill publishes only through GitHub CLI.
 3. For GitHub or GitHub Enterprise, require a non-default branch, a clean working tree, committed PR scope, and an authenticated `gh` session; then confirm the repository with `gh repo view`.
 4. Push the branch with upstream tracking, write the body to a temporary file, and run `gh pr create` with explicit base, head, title, and body arguments.
-5. Create a ready-for-review PR unless the user requests a draft.
+5. Create the PR as a draft and assign the authenticated user with `--draft` and `--assignee @me`. Honor explicit requests for a ready PR, a different assignee, or no assignee.
 
 ## Return the result
 
-Return the title, markdown description, and any scope assumptions or missing verification. After publication, also return the PR URL, head and base branches, and whether the PR is ready or draft.
+Return the title, markdown description, and any scope assumptions or missing verification. After publication, also return the PR URL, head and base branches, draft status, and assignee.
