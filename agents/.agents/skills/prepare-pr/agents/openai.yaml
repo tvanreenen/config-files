@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prepare PR"
+  short_description: "Draft PR copy; publish GitHub PRs when requested"
+  default_prompt: "Use $prepare-pr to inspect this branch and prepare a reviewer-accessible PR title and description. Publish only when I explicitly ask."
