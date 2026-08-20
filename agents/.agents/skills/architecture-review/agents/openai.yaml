@@ -1,0 +1,7 @@
+interface:
+  display_name: "Architecture Review"
+  short_description: "Find and evaluate architectural improvements"
+  default_prompt: "Use $architecture-review to review this codebase, identify evidence-backed architectural improvements, and recommend the strongest direction."
+
+policy:
+  allow_implicit_invocation: false

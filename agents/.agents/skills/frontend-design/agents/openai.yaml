@@ -1,0 +1,7 @@
+interface:
+  display_name: "Frontend Design"
+  short_description: "Design coherent, context-aware web interfaces"
+  default_prompt: "Use $frontend-design to design and implement this interface in alignment with the product, repository, and any established design system."
+
+policy:
+  allow_implicit_invocation: true
