@@ -1,6 +1,6 @@
 ---
 name: pressure-test
-description: Thoroughly challenge a plan, decision, or idea through dependency-aware questions before implementation. Use only when the user explicitly invokes this skill to expose assumptions, resolve tradeoffs, and establish a shared understanding.
+description: Thoroughly challenge a plan, decision, or idea through dependency-aware questions to expose assumptions, resolve tradeoffs, and establish a shared understanding before implementation.
 ---
 
 # Pressure Test
