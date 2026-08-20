@@ -1,0 +1,7 @@
+interface:
+  display_name: "Pressure Test"
+  short_description: "Challenge a plan or decision before acting"
+  default_prompt: "Use $pressure-test to challenge this plan, expose assumptions, resolve tradeoffs, and establish a shared understanding before implementation."
+
+policy:
+  allow_implicit_invocation: false
