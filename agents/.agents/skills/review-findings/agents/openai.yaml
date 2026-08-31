@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review Findings"
+  short_description: "Validate and triage code-review findings"
+  default_prompt: "Use $review-findings to validate these code-review findings against current evidence, decide what to address, defer, or decline, and recommend project- and version-aligned fixes."
+
+policy:
+  allow_implicit_invocation: false
