@@ -1,11 +1,11 @@
 ---
-name: architecture-review
+name: review-architecture
 description: Review a codebase for architectural friction, identify evidence-backed improvement opportunities, and present the strongest candidates with a recommended direction.
 ---
 
-# Architecture Review
+# Review Architecture
 
-Perform a read-only review for architectural friction. Load and apply `$architecture-design`.
+Perform a read-only review for architectural friction. Load and apply `$design-architecture`.
 
 ## Process
 
@@ -26,7 +26,7 @@ Perform a read-only review for architectural friction. Load and apply `$architec
 ### 3. Explore the selected candidate
 
 - Summarize the constraints, dependencies, module shape, seams, adapters, and testing implications that require further design.
-- Compare materially plausible interfaces as directed by `$architecture-design`.
+- Compare materially plausible interfaces as directed by `$design-architecture`.
 - Identify accepted domain knowledge that belongs in repository guidance. For a durable, non-obvious rejection, offer an ADR so later reviews do not repeat it.
 - Offer `$pressure-test` as the next step, but invoke it only when the user explicitly requests it.
 - Keep the review read-only unless the user separately requests implementation or documentation changes.

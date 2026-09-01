@@ -1,7 +1,0 @@
-interface:
-  display_name: "Unslop"
-  short_description: "Remove recognizable AI prose signatures"
-  default_prompt: "Use $unslop to remove recognizable AI-generated prose signatures without changing meaning, qualifications, or voice."
-
-policy:
-  allow_implicit_invocation: true

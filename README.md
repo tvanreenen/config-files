@@ -1,53 +1,62 @@
 # Config Files
 
-Personal macOS configuration managed with
-[GNU Stow](https://www.gnu.org/software/stow/) and
-[Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile).
+My macOS dotfiles and coding-agent playbook, versioned as [GNU Stow](https://www.gnu.org/software/stow/) packages.
 
-## Managed configuration
+This repository combines workstation configuration with reusable agent guidance: global Codex instructions and focused skills for architecture, UI design, code review, pull requests, technical communication, and decision-making.
 
-- `agents` — shared agent skills
-- `codex` — Codex configuration and skills
-- `frame` — [Frame](https://github.com/tvanreenen/frame) window manager
-- `ghostty` — [Ghostty](https://github.com/ghostty-org/ghostty) terminal
-- `nvim` — [Neovim](https://neovim.io/) configuration
-- `sketchybar` — [SketchyBar](https://github.com/FelixKratz/SketchyBar)
-- `starship` — [Starship](https://starship.rs/) shell prompt
-- `zshrc` — [Zsh](https://www.zsh.org/) shell configuration
-- `Brewfile` — command-line tools and macOS applications
+The agent configuration reflects how I want coding agents to work: understand the repository before changing it, ground technical decisions in current primary documentation, integrate with the existing architecture, and verify observable behavior.
 
-## Setup
+## Agent playbook
 
-Install [Homebrew](https://brew.sh/), then install the declared dependencies and
-link the configuration into the home directory:
+The `codex` package installs [global Codex instructions](codex/.codex/AGENTS.md) at `~/.codex/AGENTS.md`. The `agents` package installs reusable skills under `~/.agents/skills`. Keeping them separate allows the baseline instructions and task-specific skills to be installed independently.
+
+### Skills
+
+| Skill | Purpose |
+| --- | --- |
+| [Design Architecture](agents/.agents/skills/design-architecture/SKILL.md) | Design or refactor module responsibilities, interfaces, seams, and dependencies. |
+| [Review Architecture](agents/.agents/skills/review-architecture/SKILL.md) | Find and evaluate evidence-backed architectural improvements. |
+| [Design UI](agents/.agents/skills/design-ui/SKILL.md) | Design production-quality web interfaces that fit the product and its existing design system. |
+| [Prepare PR](agents/.agents/skills/prepare-pr/SKILL.md) | Turn a branch into a reviewer-accessible PR narrative and publish it when requested. |
+| [Pressure Test](agents/.agents/skills/pressure-test/SKILL.md) | Challenge a plan or decision to expose assumptions and resolve consequential tradeoffs. |
+| [Triage Findings](agents/.agents/skills/triage-findings/SKILL.md) | Validate and scope code-review findings before deciding what to address, defer, or decline. |
+| [Write in STE](agents/.agents/skills/write-in-ste/SKILL.md) | Re-explain selected content with sufficient context in ASD-STE100 Simplified Technical English. |
+| [Remove AI Tells](agents/.agents/skills/remove-ai-tells/SKILL.md) | Remove recognizable AI prose signatures without replacing the writer's voice. |
+
+## macOS configuration
+
+| Package | Configuration |
+| --- | --- |
+| `frame` | [Frame](https://github.com/tvanreenen/frame) window manager |
+| `ghostty` | [Ghostty](https://github.com/ghostty-org/ghostty) terminal |
+| `nvim` | [Neovim](https://neovim.io/) editor |
+| `sketchybar` | [SketchyBar](https://github.com/FelixKratz/SketchyBar) status bar |
+| `starship` | [Starship](https://starship.rs/) shell prompt |
+| `zshrc` | [Zsh](https://www.zsh.org/) shell configuration |
+| `Brewfile` | Command-line tools and macOS applications managed with [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile) |
+
+## Installation
+
+This is a personal configuration repository. Review the packages and existing files in your home directory before linking the complete setup.
+
+Install [Homebrew](https://brew.sh/), clone the repository, and install the declared dependencies and all Stow packages:
 
 ```sh
+git clone https://github.com/tvanreenen/config-files.git
+cd config-files
 brew bundle
 just stow
 ```
 
-The repository's `.stowrc` sets the Stow target to the home directory. Run
-`just --list` to see the remaining setup helpers.
-
-## Cloudflare Tunnel
-
-Homebrew installs and upgrades `cloudflared`, but the `home` tunnel runs as the
-system LaunchDaemon `com.cloudflare.cloudflared` so it starts at boot. Do not run
-`brew services start cloudflared`; that creates an unconfigured per-user service.
-
-For a new machine, set `TUNNEL_TOKEN` from a secure source and install the
-boot-time service:
+To install only the agent skills and Codex instructions after installing GNU Stow:
 
 ```sh
-sudo cloudflared service install "$TUNNEL_TOKEN"
-unset TUNNEL_TOKEN
+stow agents
+stow codex
 ```
 
-After upgrading `cloudflared`, restart the service and verify the tunnel:
+Individual workstation packages can be linked in the same way, such as `stow nvim`. The repository's `.stowrc` targets the home directory. Run `just --list` to see the remaining setup helpers.
 
-```sh
-sudo launchctl kickstart -k system/com.cloudflare.cloudflared
-cloudflared tunnel info home
-```
+## Machine-specific operations
 
-Keep the tunnel token and generated LaunchDaemon plist out of this repository.
+- [Cloudflare Tunnel service setup and upgrades](docs/cloudflare-tunnel.md)

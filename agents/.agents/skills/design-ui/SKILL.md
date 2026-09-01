@@ -1,9 +1,9 @@
 ---
-name: frontend-design
+name: design-ui
 description: Design and implement intentional, production-quality web interfaces. Use for visual or interaction work on web components, pages, and applications, whether greenfield, redesigned, or within an existing design system; skip purely functional changes.
 ---
 
-# Frontend Design
+# Design UI
 
 Ground visual decisions in the product's purpose, audience, content, brand, accessibility requirements, technical constraints, and repository conventions.
 

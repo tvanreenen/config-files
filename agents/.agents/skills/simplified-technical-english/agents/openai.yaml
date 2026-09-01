@@ -1,7 +1,0 @@
-interface:
-  display_name: "Simplified Technical English"
-  short_description: "Re-explain selected or previous content in Simplified Technical English"
-  default_prompt: "Use $simplified-technical-english to re-explain the previous response with enough context."
-
-policy:
-  allow_implicit_invocation: false

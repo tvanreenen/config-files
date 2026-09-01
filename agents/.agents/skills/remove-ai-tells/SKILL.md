@@ -1,9 +1,9 @@
 ---
-name: unslop
+name: remove-ai-tells
 description: Remove recognizable patterns associated with AI-generated prose without imposing a replacement voice or house style. Use when drafting or editing documentation, PR text, explanations, and other reader-facing prose; leave quotations and fixed wording unchanged.
 ---
 
-# Unslop
+# Remove AI Tells
 
 Use the examples below to identify and remove recurring AI prose signatures. They are contextual cues, not banned forms or a replacement style. Preserve the writer’s meaning, qualifications, terminology, and intentional voice; respect applicable style guidance.
 

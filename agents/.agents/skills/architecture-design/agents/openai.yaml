@@ -1,7 +1,0 @@
-interface:
-  display_name: "Architecture Design"
-  short_description: "Design cohesive modules, interfaces, and seams"
-  default_prompt: "Use $architecture-design to improve these module responsibilities, interfaces, seams, and dependencies for cohesion, testability, locality, and leverage."
-
-policy:
-  allow_implicit_invocation: true

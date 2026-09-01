@@ -1,9 +1,9 @@
 ---
-name: architecture-design
+name: design-architecture
 description: Design or refactor module responsibilities, interfaces, seams, and dependency placement for cohesion, testability, locality, and leverage. Use for materially architectural changes or competing designs; skip routine work within an established structure.
 ---
 
-# Architecture Design
+# Design Architecture
 
 Integrate architectural changes with the repository's established responsibilities, terminology, conventions, and constraints. Prefer architectural fit over abstract purity.
 

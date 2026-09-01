@@ -1,0 +1,7 @@
+interface:
+  display_name: "Remove AI Tells"
+  short_description: "Remove recognizable AI prose signatures"
+  default_prompt: "Use $remove-ai-tells to remove recognizable AI-generated prose signatures without changing meaning, qualifications, or voice."
+
+policy:
+  allow_implicit_invocation: true

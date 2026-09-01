@@ -1,5 +1,5 @@
 ---
-name: simplified-technical-english
+name: write-in-ste
 description: Re-explain user-selected content or the previous agent response with sufficient context in ASD-STE100 Simplified Technical English.
 ---
 

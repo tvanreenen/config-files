@@ -1,9 +1,9 @@
 ---
-name: review-findings
+name: triage-findings
 description: Validate provided code-review findings against the current code and authoritative evidence, decide whether to address, defer, or decline them, and recommend project- and version-aligned fixes.
 ---
 
-# Review Findings
+# Triage Findings
 
 Validate the supplied findings rather than accepting or extending them. Keep the work read-only unless the user also requests implementation.
 
