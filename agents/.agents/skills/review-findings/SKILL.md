@@ -17,14 +17,18 @@ Validate the supplied findings rather than accepting or extending them. Keep the
   - **Confirmed:** Supported by direct or authoritative evidence.
   - **Disproven:** Contradicted by the current implementation or authoritative evidence.
   - **Unverified:** Available evidence is insufficient or ambiguous. State what would resolve it.
-- Detect stale, duplicated, already-resolved, or interdependent findings. Stop once the evidence is sufficient; do not expand this into a new general review.
+- Detect stale, duplicated, already-resolved, or interdependent findings. Stop once the evidence is sufficient.
 
-## Decide the disposition
+## Determine scope and disposition
 
-Assess disposition separately from evidentiary status. Normally, only confirmed findings are candidates for implementation. If uncertainty itself creates material risk, state that explicitly rather than presenting the finding as confirmed.
+Treat evidentiary status, remediation scope, and disposition as separate decisions. Normally, only confirmed findings are candidates for implementation. If uncertainty itself creates material risk, state that without presenting the finding as confirmed.
+
+For confirmed findings, inspect the relevant repository surfaces for recurrence, shared causes, governing contracts, and ownership. Search only far enough to distinguish a local defect from a repeated symptom or cross-cutting concern; do not turn the supplied findings into a general review.
+
+If the concern is cross-cutting, decide whether the current change should correct the shared cause, contain the immediate failure, defer coherent broader work, or take no action. Avoid isolated fixes that create another convention, but do not widen the change merely because similar occurrences exist. Consider ownership, coupling, risk, and verification cost.
 
 - **Address now:** Material to the current change's correctness, safety, maintainability, or completeness; owned by this change; and worth the added complexity.
-- **Defer:** Valid but separable, owned elsewhere, dependent on unresolved work, or better handled deliberately in a follow-up. State the follow-up scope and trigger.
+- **Defer:** Valid but separable, owned elsewhere, dependent on unresolved work, or better handled as a coherent follow-up. State its scope, owner, and trigger.
 - **Decline:** Disproven, stale, already covered, inconsistent with project constraints, or unlikely to provide proportional benefit.
 
 For hardening findings, the question is not “Can this be hardened?” Ask: “What concrete failure are we preventing, how likely and consequential is it, and does this change own that control?” Account for existing controls, the project's threat or failure model, and the complexity introduced. In later review rounds, require new evidence or material risk before widening scope; another possible defense is not sufficient.
@@ -32,6 +36,7 @@ For hardening findings, the question is not “Can this be hardened?” Ask: “
 ## Recommend the response
 
 - Explain the finding's mechanism, triggering conditions, and consequence in enough detail to support its evidence status and disposition.
+- For confirmed findings, state whether the concern is local or cross-cutting and distinguish the recommended immediate action from any follow-up work and its owner.
 - For findings to address now, recommend a fix in enough detail to show where it belongs, how it integrates with the existing code, and how it should be verified.
 - Prefer the simplest complete fix that fits existing ownership boundaries, abstractions, naming, dependencies, and test strategy. Reuse or extend established mechanisms instead of introducing parallel conventions.
 - Use idiomatic, supported APIs and patterns for the repository's actual language, framework, and library versions.
