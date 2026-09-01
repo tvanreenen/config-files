@@ -1,0 +1,7 @@
+interface:
+  display_name: "Manage Stack"
+  short_description: "Manage GitHub stacked pull requests"
+  default_prompt: "Use $manage-stack to inspect this GitHub PR stack, establish the affected members, and perform the requested operation with the current stack-aware workflow."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,7 +1,7 @@
 interface:
   display_name: "Write in STE"
-  short_description: "Re-explain selected or previous content in Simplified Technical English"
-  default_prompt: "Use $write-in-ste to re-explain the previous response with enough context."
+  short_description: "Rewrite selected content in Simplified Technical English"
+  default_prompt: "Use $write-in-ste to rewrite the selected or most recent relevant content in clean, direct Simplified Technical English."
 
 policy:
   allow_implicit_invocation: false

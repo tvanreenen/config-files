@@ -1,6 +1,6 @@
 ---
 name: prepare-pr
-description: Inspect a local branch and prepare a reviewer-accessible PR title and description. Use for PR drafting on any Git host or explicit requests to publish a GitHub PR with `gh`. Publish only after confirming GitHub hosting; otherwise return draft artifacts.
+description: Draft or revise self-contained, reviewer-accessible PR titles and descriptions from branch, repository, and task context. Use for writing, reviewing, improving, or publishing PR copy on any Git host. Publish only when explicitly requested and after confirming GitHub hosting.
 ---
 
 # Prepare PR
@@ -10,11 +10,12 @@ description: Inspect a local branch and prepare a reviewer-accessible PR title a
 - Honor a user-specified base or target branch.
 - Otherwise, infer the base from `origin/HEAD` or other local Git metadata.
 - Use the complete branch diff against the merge base as the source of truth. Use repository and current task context to interpret intent; treat commit messages as supporting context, not the narrative.
+- When revising an existing PR, inspect its current title and description alongside the final branch diff and relevant repository and task context.
 - Identify uncommitted changes and whether they fall outside the PR scope.
 
 ## Write the PR
 
-- Center the narrative on the primary outcome and why it was needed.
+- Write a proportionate, self-contained narrative for a reviewer who has not followed the task or conversation. Give the context needed to understand the problem, primary outcome, approach, and verification without turning the body into an implementation log.
 - Explain non-obvious decisions and material risks, mitigations, or tradeoffs where they help evaluate the approach.
 - Disclose ancillary work without letting it obscure the main change, and organize by reviewer significance rather than file order or implementation chronology.
 - If the branch contains unrelated changes, say so instead of forcing a unified story.
@@ -40,8 +41,9 @@ Only create, open, or publish the PR when the user explicitly requests it.
 1. Inspect `origin` to determine the hosting provider.
 2. For any other provider, return the draft title and description and explain that publication was not attempted because this skill publishes only through GitHub CLI.
 3. For GitHub or GitHub Enterprise, require a non-default branch, a clean working tree, committed PR scope, and an authenticated `gh` session; then confirm the repository with `gh repo view`.
-4. Push the branch with upstream tracking, write the body to a temporary file, and run `gh pr create` with explicit base, head, title, and body arguments.
-5. Create the PR as a draft and assign the authenticated user with `--draft` and `--assignee @me`. Honor explicit requests for a ready PR, a different assignee, or no assignee.
+4. Before ordinary publication, determine whether the branch or PR has local `gh stack` tracking or remote GitHub stack membership. If either is present, use `$manage-stack` and its stack-aware publication flow.
+5. Otherwise, push the branch with upstream tracking, write the body to a temporary file, and run `gh pr create` with explicit base, head, title, and body arguments.
+6. Create an ordinary PR as a draft and assign the authenticated user with `--draft` and `--assignee @me`. Honor explicit requests for a ready PR, a different assignee, or no assignee.
 
 ## Return the result
 

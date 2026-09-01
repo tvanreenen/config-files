@@ -1,6 +1,6 @@
 ---
 name: write-in-ste
-description: Re-explain user-selected content or the previous agent response with sufficient context in ASD-STE100 Simplified Technical English.
+description: Rewrite user-selected content from the current message or earlier conversation in clean, direct ASD-STE100 Simplified Technical English.
 ---
 
-Re-explain the content that the user identifies. If the user does not identify content, re-explain the previous agent response. Give enough context to make the explanation understandable. Use ASD-STE100 Simplified Technical English and preserve technical accuracy.
+Rewrite the content that the user identifies, whether it appears in the current message or earlier conversation. If the target is implicit, rewrite the most recent relevant agent output. Preserve meaning and technical accuracy. Use clean, simple, direct terminology and ASD-STE100 Simplified Technical English. Include only the context needed to make the result understandable.
