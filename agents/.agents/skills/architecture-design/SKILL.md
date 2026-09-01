@@ -11,6 +11,7 @@ Integrate architectural changes with the repository's established responsibiliti
 
 - Design deep modules: substantial cohesive behavior behind narrow interfaces. Treat interface as everything callers must know, and depth as leverage rather than implementation size.
 - Apply the deletion test. A useful module concentrates complexity; a pass-through merely relocates it.
+- Recognize when a problem maps to an established data structure, algorithm, protocol, or industry standard. Prefer established solutions that fit the constraints; verify relevant semantics, complexity, interoperability, and version applicability from authoritative sources before introducing a custom mechanism.
 - Place seams only where actual variation or meaningful ownership, volatility, failure, security, deployment, or external-system boundaries justify them. Keep test-only seams internal and avoid speculative adapters.
 - Make variable dependencies explicit, and test observable behavior primarily through the public interface. Preserve focused coverage for distinct algorithms, invariants, performance, and failure modes.
 - When restructuring, replace redundant tests of obsolete shallow modules rather than layering them beneath equivalent interface-level tests.
