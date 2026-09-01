@@ -1,11 +1,11 @@
 ---
 name: design-architecture
-description: Design or refactor module responsibilities, interfaces, seams, and dependency placement for cohesion, testability, locality, and leverage. Use for materially architectural changes or competing designs; skip routine work within an established structure.
+description: Design or evaluate material changes to module ownership, public interfaces, dependency direction, shared state, or system boundaries. Use during implementation or review when one of those decisions is consequential; skip local changes that fit an established structure.
 ---
 
 # Design Architecture
 
-Integrate architectural changes with the repository's established responsibilities, terminology, conventions, and constraints. Prefer architectural fit over abstract purity.
+Integrate material architectural decisions with the repository's established responsibilities, terminology, conventions, and constraints. Prefer architectural fit over abstract purity.
 
 ## Principles
 

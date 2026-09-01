@@ -17,8 +17,8 @@ Most skills here are original to this repository. They grew from repeated behavi
 #### Plan and design
 
 - [`$pressure-test`](agents/.agents/skills/pressure-test/SKILL.md) — Challenge a plan or decision to expose assumptions and resolve consequential tradeoffs.
-- [`$review-architecture`](agents/.agents/skills/review-architecture/SKILL.md) — Find and evaluate evidence-backed architectural improvements.
-- [`$design-architecture`](agents/.agents/skills/design-architecture/SKILL.md) — Design or refactor module responsibilities, interfaces, seams, and dependencies.
+- [`$audit-architecture`](agents/.agents/skills/audit-architecture/SKILL.md) — Find and prioritize evidence-backed architectural improvements.
+- [`$design-architecture`](agents/.agents/skills/design-architecture/SKILL.md) — Design or evaluate material architectural decisions encountered during implementation or review.
 - [`$design-ui`](agents/.agents/skills/design-ui/SKILL.md) — Design production-quality web interfaces that fit the product and its existing design system.
 
 #### Review and delivery

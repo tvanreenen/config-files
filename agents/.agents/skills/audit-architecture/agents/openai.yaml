@@ -1,0 +1,7 @@
+interface:
+  display_name: "Audit Architecture"
+  short_description: "Find and prioritize architectural improvements"
+  default_prompt: "Use $audit-architecture to audit this codebase for evidence-backed architectural improvements and recommend the strongest candidate for deeper design."
+
+policy:
+  allow_implicit_invocation: false

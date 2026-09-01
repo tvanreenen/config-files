@@ -1,7 +1,7 @@
 interface:
   display_name: "Design Architecture"
-  short_description: "Design cohesive modules, interfaces, and seams"
-  default_prompt: "Use $design-architecture to improve these module responsibilities, interfaces, seams, and dependencies for cohesion, testability, locality, and leverage."
+  short_description: "Design or evaluate material architectural decisions"
+  default_prompt: "Use $design-architecture to design or evaluate this material architectural decision for repository fit, cohesion, locality, testability, and leverage."
 
 policy:
   allow_implicit_invocation: true

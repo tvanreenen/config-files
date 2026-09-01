@@ -1,11 +1,11 @@
 ---
-name: review-architecture
-description: Review a codebase for architectural friction, identify evidence-backed improvement opportunities, and present the strongest candidates with a recommended direction.
+name: audit-architecture
+description: Audit a codebase for architectural friction, prioritize evidence-backed improvement opportunities, and recommend where deeper design work is warranted.
 ---
 
-# Review Architecture
+# Audit Architecture
 
-Perform a read-only review for architectural friction. Load and apply `$design-architecture`.
+Perform a read-only audit for architectural friction.
 
 ## Process
 
@@ -23,10 +23,9 @@ Perform a read-only review for architectural friction. Load and apply `$design-a
 - Identify ADR conflicts and the evidence for reconsidering them.
 - Recommend the candidate to address first and explain why. Do not design interfaces until the user selects a candidate.
 
-### 3. Explore the selected candidate
+### 3. Hand off deeper design
 
-- Summarize the constraints, dependencies, module shape, seams, adapters, and testing implications that require further design.
-- Compare materially plausible interfaces as directed by `$design-architecture`.
-- Identify accepted domain knowledge that belongs in repository guidance. For a durable, non-obvious rejection, offer an ADR so later reviews do not repeat it.
-- Offer `$pressure-test` as the next step, but invoke it only when the user explicitly requests it.
-- Keep the review read-only unless the user separately requests implementation or documentation changes.
+- After the user selects a candidate, use `$design-architecture` to examine its constraints, dependencies, module shape, seams, adapters, testing implications, and materially plausible interfaces.
+- Identify accepted domain knowledge that belongs in repository guidance. For a durable, non-obvious rejection, offer an ADR so later audits do not repeat it.
+- Offer `$pressure-test` for consequential unresolved decisions, but invoke it only when the user explicitly requests it.
+- Keep the audit read-only unless the user separately requests implementation or documentation changes.
