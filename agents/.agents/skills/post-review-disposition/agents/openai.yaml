@@ -1,0 +1,7 @@
+interface:
+  display_name: "Post Review Disposition"
+  short_description: "Post dispositions for triaged PR comments"
+  default_prompt: "Use $post-review-disposition to respond to the review comments we triaged with what we addressed, deferred, or did not change and why."
+
+policy:
+  allow_implicit_invocation: false
