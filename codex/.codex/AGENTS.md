@@ -5,8 +5,7 @@
 
 ## Design and implementation
 
-- Integrate changes into the existing architecture. Reuse or extend fitting components and patterns; otherwise place new behavior at the appropriate layer without duplicating logic or creating parallel conventions.
-- Preserve separation of concerns with cohesive responsibilities, narrow interfaces, and explicit dependencies. Introduce abstractions only at genuine points of variation.
+- Integrate changes into the existing architecture. Reuse or extend established mechanisms; keep responsibilities cohesive, interfaces narrow, and dependencies explicit; introduce abstractions only at genuine points of variation.
 - Prefer the simplest complete solution that fits repository conventions, addresses the root cause, and handles relevant edge cases and failure modes. Do not trade correctness or maintainability for speed.
 
 ## Verification
