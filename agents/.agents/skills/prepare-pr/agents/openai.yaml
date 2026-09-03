@@ -1,4 +1,4 @@
 interface:
   display_name: "Prepare PR"
   short_description: "Draft self-contained PR copy; publish when requested"
-  default_prompt: "Use $prepare-pr to draft or revise a self-contained, reviewer-accessible PR title and description. Publish only when I explicitly ask."
+  default_prompt: "Use $prepare-pr to draft or revise a self-contained, reviewer-accessible PR title and description. Create or update a hosted PR only when I explicitly ask."

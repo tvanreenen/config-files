@@ -1,50 +1,45 @@
 ---
 name: prepare-pr
-description: Draft or revise self-contained, reviewer-accessible PR titles and descriptions from branch, repository, and task context. Use for writing, reviewing, improving, or publishing PR copy on any Git host. Publish only when explicitly requested and after confirming GitHub hosting.
+description: Draft or revise self-contained, reviewer-accessible PR titles and descriptions from branch, repository, and task context. Use when writing, reviewing, improving, or publishing PR copy on any Git host. Create or update a hosted PR only when explicitly requested and after confirming GitHub hosting.
 ---
 
 # Prepare PR
 
-## Establish the PR scope
+## Establish scope
 
-- Honor a user-specified base or target branch.
-- Otherwise, infer the base from `origin/HEAD` or other local Git metadata.
-- Use the complete branch diff against the merge base as the source of truth. Use repository and current task context to interpret intent; treat commit messages as supporting context, not the narrative.
-- When revising an existing PR, inspect its current title and description alongside the final branch diff and relevant repository and task context.
-- Identify uncommitted changes and whether they fall outside the PR scope.
+- Honor a user-specified base branch; otherwise infer it from `origin/HEAD` or other local Git metadata.
+- Use the complete committed diff against the merge base as the source of truth. Use repository and task context to understand intent; treat commit messages as supporting evidence, not the narrative.
+- When revising an existing PR, inspect its current title and description alongside the final branch diff.
+- Identify uncommitted changes and any committed changes that do not fit the primary scope.
 
-## Write the PR
-
-- Write a proportionate, self-contained narrative for a reviewer who has not followed the task or conversation. Give the context needed to understand the problem, primary outcome, approach, and verification without turning the body into an implementation log.
-- Explain non-obvious decisions and material risks, mitigations, or tradeoffs where they help evaluate the approach.
-- Disclose ancillary work without letting it obscure the main change, and organize by reviewer significance rather than file order or implementation chronology.
-- If the branch contains unrelated changes, say so instead of forcing a unified story.
-- Report only testing evidenced by the branch or provided by the user; state directly when it is absent or unknown.
-- Do not invent unsupported rationale or assurances.
+## Draft the PR
 
 ### Title
 
-- Name the primary outcome with a concrete verb and object in one sentence-style subject line.
-- Keep it specific enough to distinguish the branch from neighboring work.
-- Avoid conventional commit prefixes, bracketed tags, and a trailing period unless repository conventions require them.
+- Name the primary outcome with a concrete verb and object, specific enough to distinguish the PR from neighboring work.
+- Use a sentence-style subject line without conventional commit prefixes, bracketed tags, or a trailing period unless repository conventions require them.
 
 ### Description
 
-- Choose the structure, section names, and level of detail that make this particular change easiest to understand. Follow useful repository conventions, but do not impose a stock template.
-- Use prose, bullets, and headings only where they improve the story. A focused fix may need little structure; a broad feature may need distinct context for behavior, decisions, migration, rollout, risks, or verification.
-- Keep every section purposeful and omit empty boilerplate.
+- Write a proportionate, self-contained narrative for a reviewer who did not follow the task. Treat the PR body as a durable reviewer artifact, not a summary of the conversation. Preserve the context needed to understand the problem, outcome, approach, verification, and relationship to surrounding work; when shortening, cut repetition before necessary context.
+- Center the primary change and organize by reviewer significance, not file order or implementation chronology. Disclose ancillary work without letting it obscure the story; if the diff contains unrelated changes, say so rather than inventing a unified narrative.
+- Explain non-obvious decisions and material risks, mitigations, or tradeoffs that affect review.
+- Ground rationale and assurances in available evidence. Report only verification evidenced by the branch or user, and state gaps directly.
+- Choose the structure and level of detail that make the change easiest to understand. Follow useful repository conventions, but do not impose a stock template or retain empty boilerplate. A focused fix may need a short narrative; a broad or risky change may need distinct context for behavior, decisions, migration, rollout, risks, or verification.
+- Do not hard-wrap prose at a fixed column width. Keep each paragraph on one logical line and preserve only line breaks required by Markdown structure.
 
-## Publish when requested
+## Update GitHub only when requested
 
-Only create, open, or publish the PR when the user explicitly requests it.
+Drafting or revising PR copy does not authorize a remote change. Create or update a hosted PR only when the user explicitly requests it.
 
 1. Inspect `origin` to determine the hosting provider.
-2. For any other provider, return the draft title and description and explain that publication was not attempted because this skill publishes only through GitHub CLI.
-3. For GitHub or GitHub Enterprise, require a non-default branch, a clean working tree, committed PR scope, and an authenticated `gh` session; then confirm the repository with `gh repo view`.
-4. Before ordinary publication, determine whether the branch or PR has local `gh stack` tracking or remote GitHub stack membership. If either is present, use `$manage-stack` and its stack-aware publication flow.
-5. Otherwise, push the branch with upstream tracking, write the body to a temporary file, and run `gh pr create` with explicit base, head, title, and body arguments.
-6. Create an ordinary PR as a draft and assign the authenticated user with `--draft` and `--assignee @me`. Honor explicit requests for a ready PR, a different assignee, or no assignee.
+2. For a non-GitHub host, return the proposed title and description without attempting publication.
+3. For GitHub or GitHub Enterprise, confirm the repository and authenticated account with `gh`.
+4. Before ordinary publication, check for local `gh stack` tracking and remote GitHub stack membership. If either is present, follow `$manage-stack`.
+5. For an ordinary existing PR, write the body to a temporary file and update the explicitly targeted PR with `gh pr edit`.
+6. For a new ordinary PR, require a non-default branch, a clean working tree, and committed PR scope. Push with upstream tracking, write the body to a temporary file, and run `gh pr create` with explicit base, head, title, and body arguments.
+7. Create a new ordinary PR as a draft and assign `@me`. Honor explicit requests for a ready PR, another assignee, or no assignee.
 
 ## Return the result
 
-Return the title, markdown description, and any scope assumptions or missing verification. After publication, also return the PR URL, head and base branches, draft status, and assignee.
+Return the title, Markdown description, scope assumptions, and missing verification. After a remote update, also return the PR URL, head and base branches, draft status, and assignee.
