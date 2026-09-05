@@ -18,7 +18,7 @@ Integrate material architectural decisions with the repository's established res
 
 ## Compare consequential alternatives
 
-When materially different designs remain plausible, compare at least two from the same constraints and evidence. Consider the public surface, representative callers, hidden complexity, dependency strategy, repository fit, cohesion, locality, leverage, testability, likely change patterns, and material tradeoffs. Recommend the strongest design. Use a hybrid only when it is more coherent than either alternative.
+When materially different designs remain plausible, compare at least two against the same constraints and evidence. Evaluate interfaces and representative callers for repository fit, hidden complexity, testability, and likely change. Explain material tradeoffs and recommend the strongest design; combine alternatives only when the hybrid is more coherent.
 
 ## Boundary prompts
 
