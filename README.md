@@ -26,6 +26,7 @@ Most skills here are original to this repository. They grew from repeated behavi
 - [`$prepare-pr`](agents/.agents/skills/prepare-pr/SKILL.md) — Draft or revise a self-contained PR narrative and publish it when requested.
 - [`$manage-stack`](agents/.agents/skills/manage-stack/SKILL.md) — Use GitHub's stack-aware workflow to create, sync, rebase, and merge dependent PRs.
 - [`$triage-findings`](agents/.agents/skills/triage-findings/SKILL.md) — Validate and scope code-review findings before deciding what to address, defer, or decline.
+- [`$fix-findings`](agents/.agents/skills/fix-findings/SKILL.md) — Implement triaged findings with validated local commits and present the changes for approval before pushing.
 - [`$post-review-disposition`](agents/.agents/skills/post-review-disposition/SKILL.md) — Post concise responses to triaged PR comments explaining what was completed, deferred, or left unchanged and why.
 
 #### Communication

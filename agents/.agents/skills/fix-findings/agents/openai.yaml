@@ -1,0 +1,7 @@
+interface:
+  display_name: "Fix Findings"
+  short_description: "Fix triaged findings in validated local commits"
+  default_prompt: "Use $fix-findings to implement the triaged findings with substantiated, project-aligned fixes and coherent local commits, then present them for my review before pushing."
+
+policy:
+  allow_implicit_invocation: true
