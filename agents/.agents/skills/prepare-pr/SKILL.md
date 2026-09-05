@@ -27,6 +27,7 @@ description: Draft or revise self-contained, reviewer-accessible PR titles and d
 - Ground rationale and assurances in available evidence. Report only verification evidenced by the branch or user, and state gaps directly.
 - Choose the structure and level of detail that make the change easiest to understand. Follow useful repository conventions, but do not impose a stock template or retain empty boilerplate. A focused fix may need a short narrative; a broad or risky change may need distinct context for behavior, decisions, migration, rollout, risks, or verification.
 - Do not hard-wrap prose at a fixed column width. Keep each paragraph on one logical line and preserve only line breaks required by Markdown structure.
+- On GitHub, do not label sections or list items with `#1`, `#2`, or similar; GitHub autolinks that syntax. Use it only for intentional issue or PR references.
 
 ## Update GitHub only when requested
 

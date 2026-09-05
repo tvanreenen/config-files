@@ -13,4 +13,5 @@ Post disposition responses on the explicit pull request, or the pull request for
 - Match the response to the comment surface:
   - For selected general PR conversation comments, post one grouped disposition for the set triaged together.
   - For selected inline review comments, reply directly and narrowly in each original review thread.
+- Do not label findings with `#1`, `#2`, or similar; GitHub autolinks that syntax. Use it only for intentional issue or PR references.
 - Keep responses concise, factual, and non-defensive. Before posting, confirm the current head and avoid duplicates. Use `gh pr comment` for general comments and the review-comment reply endpoint for inline threads.
