@@ -11,4 +11,6 @@
 
 ## Verification
 
+- Choose the smallest test scope and lightest environment that faithfully exercise the behavior and its failure modes. Use broader integration or end-to-end tests where the interaction itself is the contract; do not mock away what the test must prove.
+- Follow existing test conventions where appropriate, but reassess their fit rather than copying precedent. Keep domain logic independently testable without introducing test-only production abstractions.
 - Run the relevant tests, static analysis, and build checks. Test observable behavior and boundaries rather than implementation details, and report anything that remains unverified.
