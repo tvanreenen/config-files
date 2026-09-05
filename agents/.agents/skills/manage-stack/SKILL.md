@@ -1,6 +1,6 @@
 ---
 name: manage-stack
-description: Manage GitHub stacked pull requests with `gh stack`. Use for creating, linking, submitting, navigating, rebasing, syncing, restructuring, or merging a stack; when GitHub stack membership or local `gh stack` tracking is present; or when dependent PRs may require stack-aware handling.
+description: Inspect and manage GitHub PR stacks with `gh stack`. Use for stack operations and publishing dependent PRs; skip code review and PR-copy edits.
 ---
 
 # Manage Stack

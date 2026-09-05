@@ -36,7 +36,7 @@ Drafting or revising PR copy does not authorize a remote change. Create or updat
 1. Inspect `origin` to determine the hosting provider.
 2. For a non-GitHub host, return the proposed title and description without attempting publication.
 3. For GitHub or GitHub Enterprise, confirm the repository and authenticated account with `gh`.
-4. Before ordinary publication, check for local `gh stack` tracking and remote GitHub stack membership. If either is present, follow `$manage-stack`.
+4. Before creating PRs or pushing branch changes, check for local `gh stack` tracking and remote GitHub stack membership. If either is present, follow `$manage-stack`.
 5. For an ordinary existing PR, write the body to a temporary file and update the explicitly targeted PR with `gh pr edit`.
 6. For a new ordinary PR, require a non-default branch, a clean working tree, and committed PR scope. Push with upstream tracking, write the body to a temporary file, and run `gh pr create` with explicit base, head, title, and body arguments.
 7. Create a new ordinary PR as a draft and assign `@me`. Honor explicit requests for a ready PR, another assignee, or no assignee.

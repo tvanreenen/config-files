@@ -1,6 +1,6 @@
 ---
 name: remove-ai-tells
-description: Remove recognizable patterns associated with AI-generated prose without imposing a replacement voice or house style. Use when drafting or editing documentation, PR text, explanations, and other reader-facing prose; leave quotations and fixed wording unchanged.
+description: Remove AI prose patterns from substantive drafts, including documentation and PR copy, or perform requested prose cleanup. Skip routine replies and status updates.
 ---
 
 # Remove AI Tells
