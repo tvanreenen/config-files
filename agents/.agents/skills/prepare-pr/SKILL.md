@@ -31,16 +31,14 @@ description: Draft or revise self-contained, reviewer-accessible PR titles and d
 
 ## Update GitHub only when requested
 
-Drafting or revising PR copy does not authorize a remote change. Create or update a hosted PR only when the user explicitly requests it.
+Create or update a hosted PR only when explicitly requested.
 
-1. Inspect `origin` to determine the hosting provider.
-2. For a non-GitHub host, return the proposed title and description without attempting publication.
-3. For GitHub or GitHub Enterprise, confirm the repository and authenticated account with `gh`.
-4. Before creating PRs or pushing branch changes, check for local `gh stack` tracking and remote GitHub stack membership. If either is present, follow `$manage-stack`.
-5. For an ordinary existing PR, write the body to a temporary file and update the explicitly targeted PR with `gh pr edit`.
-6. For a new ordinary PR, require a non-default branch, a clean working tree, and committed PR scope. Push with upstream tracking, write the body to a temporary file, and run `gh pr create` with explicit base, head, title, and body arguments.
-7. Create a new ordinary PR as a draft and assign `@me`. Honor explicit requests for a ready PR, another assignee, or no assignee.
+- Confirm the host from `origin`. For GitHub or GitHub Enterprise, verify the repository and authenticated account with `gh`; for other hosts, return draft copy.
+- Before creating PRs or pushing branch changes, check for local `gh stack` tracking and remote GitHub stack membership. If either is present, follow `$manage-stack`.
+- Pass descriptions through a temporary file with `--body-file`.
+- Update an explicitly targeted ordinary PR with `gh pr edit`.
+- For a new ordinary PR, require a non-default branch, clean working tree, and committed scope. Push with upstream tracking and use `gh pr create` with explicit base, head, title, and body. Default to `--draft --assignee @me` unless the user requests otherwise.
 
 ## Return the result
 
-Return the title, Markdown description, scope assumptions, and missing verification. After a remote update, also return the PR URL, head and base branches, draft status, and assignee.
+When providing draft copy, return the proposed title and Markdown description. After a remote update, return the PR URL and a brief confirmation. In either case, disclose scope assumptions and verification gaps.
