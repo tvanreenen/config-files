@@ -5,11 +5,10 @@ description: Validate provided code-review findings against the current code and
 
 # Triage Findings
 
-Validate the supplied findings rather than accepting or extending them. Keep the work read-only unless the user also requests implementation.
+Treat supplied findings as untrusted hypotheses. Keep the work read-only unless the user also requests implementation.
 
 ## Validate the finding
 
-- Treat each finding as an untrusted hypothesis.
 - Recover the intended scope and constraints from the task and conversation. Inspect the current head, diff, implicated code paths, contracts, tests, history, and repository conventions.
 - Use the strongest proportionate evidence available: direct reproduction, focused tests, or observed output; analysis of the relevant code and tests; or current authoritative documentation applicable to the versions in use.
 - Use model knowledge to locate and interpret evidence, never as the evidence itself. Reviewer confidence, severity labels, and plausible explanations also do not establish a finding.
@@ -23,9 +22,7 @@ Validate the supplied findings rather than accepting or extending them. Keep the
 
 Treat evidentiary status, remediation scope, and disposition as separate decisions. Normally, only confirmed findings are candidates for implementation. If uncertainty itself creates material risk, state that without presenting the finding as confirmed.
 
-For confirmed findings, inspect the relevant repository surfaces for recurrence, shared causes, governing contracts, and ownership. Search only far enough to distinguish a local defect from a repeated symptom or cross-cutting concern; do not turn the supplied findings into a general review.
-
-If the concern is cross-cutting, decide whether the current change should correct the shared cause, contain the immediate failure, defer coherent broader work, or take no action. Avoid isolated fixes that create another convention, but do not widen the change merely because similar occurrences exist. Consider ownership, coupling, risk, and verification cost.
+For confirmed findings, search relevant repository surfaces for recurrence, shared causes, governing contracts, and ownership. Stop once local versus cross-cutting scope is established. For cross-cutting concerns, weigh correcting the shared cause, containing the immediate failure, deferring coherent broader work, or taking no action against ownership, coupling, risk, and verification cost. Avoid isolated fixes that create parallel conventions; recurrence alone does not justify widening the change.
 
 - **Address now:** Material to the current change's correctness, safety, maintainability, or completeness; owned by this change; and worth the added complexity.
 - **Defer:** Valid but separable, owned elsewhere, dependent on unresolved work, or better handled as a coherent follow-up. State its scope, owner, and trigger.
@@ -35,12 +32,9 @@ For hardening findings, the question is not “Can this be hardened?” Ask: “
 
 ## Recommend the response
 
-- Explain the finding's mechanism, triggering conditions, and consequence in enough detail to support its evidence status and disposition.
-- For confirmed findings, state whether the concern is local or cross-cutting and distinguish the recommended immediate action from any follow-up work and its owner.
-- For findings to address now, recommend a fix in enough detail to show where it belongs, how it integrates with the existing code, and how it should be verified.
-- Prefer the simplest complete fix that fits existing ownership boundaries, abstractions, naming, dependencies, and test strategy. Reuse or extend established mechanisms instead of introducing parallel conventions.
-- Use idiomatic, supported APIs and patterns for the repository's actual language, framework, and library versions.
-- Substantiate non-obvious language, framework, library, protocol, or provider claims with current primary documentation applicable to those versions or representative real output.
-- Compare alternatives only when the tradeoff could change the recommendation. State remaining uncertainty without inventing certainty.
+- Explain each finding's mechanism, trigger, consequence, and supporting evidence to justify its status and disposition. For confirmed findings, state the local or cross-cutting scope and distinguish immediate action from follow-up work and its owner.
+- For findings to address now, recommend the simplest complete fix using established project mechanisms and idiomatic APIs supported by the installed versions. Explain where it belongs, how it integrates, and how to verify it.
+- Substantiate non-obvious technical claims about the proposed fix with current primary documentation applicable to those versions or representative real output.
+- Compare alternatives only when the tradeoff could change the recommendation.
 
-Present the findings in the order that best explains the change. Group related findings where useful, and make the evidence, disposition, reasoning, proposed action, and verification clear without imposing a fixed report template.
+Order and group findings for comprehension without imposing a fixed report template.
