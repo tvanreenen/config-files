@@ -21,11 +21,11 @@ Perform a read-only audit for architectural friction.
 - Present only the strongest evidence-backed candidates, organized for comprehension rather than file order or a fixed template.
 - Make each candidate's scope, friction, direction, benefit, risks or tradeoffs, and strength of evidence clear. Use repository domain language and diagrams only when they materially aid understanding.
 - Identify ADR conflicts and the evidence for reconsidering them.
-- Recommend the candidate to address first and explain why. Do not design interfaces until the user selects a candidate.
+- Recommend the candidate to address first and explain why. Proceed to interface design when the user selects a candidate or delegates that selection.
 
 ### 3. Hand off deeper design
 
-- After the user selects a candidate, use `$design-architecture` to examine its constraints, dependencies, module shape, seams, adapters, testing implications, and materially plausible interfaces.
+- For the selected candidate, use `$design-architecture` to examine its constraints, dependencies, module shape, seams, adapters, testing implications, and materially plausible interfaces.
 - Identify accepted domain knowledge that belongs in repository guidance. For a durable, non-obvious rejection, offer an ADR so later audits do not repeat it.
 - Offer `$pressure-test` for consequential unresolved decisions, but invoke it only when the user explicitly requests it.
-- Keep the audit read-only unless the user separately requests implementation or documentation changes.
+- Keep the audit read-only unless the user's request also includes implementation or documentation changes.

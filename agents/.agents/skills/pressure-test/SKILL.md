@@ -25,4 +25,4 @@ Establish a shared understanding of the plan, decision, or idea before acting on
 
 - Stop when no material decision remains unresolved or silently assumed.
 - Summarize the agreed direction, key reasoning, accepted tradeoffs, remaining risks, and any intentionally deferred work.
-- Ask the user to confirm the shared understanding before implementation or another consequential action begins.
+- Confirm the agreed direction before implementation or another consequential action unless the user has already authorized proceeding.
