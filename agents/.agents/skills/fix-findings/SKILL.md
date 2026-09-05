@@ -9,11 +9,11 @@ Implement the findings selected for action in the completed triage or explicitly
 
 ## Substantiate and implement
 
-- Check the current branch, working tree, implicated code paths, and applicable repository guidance. Preserve unrelated work and keep it out of fix commits.
+- Check the current branch and working tree. Preserve unrelated work and keep it out of fix commits.
 - Confirm that each selected finding and proposed remedy still apply to the current code. Revisit triage only when new evidence changes it; report stale, resolved, or unsupported findings instead of forcing a fix. Keep deferred and declined findings outside the implementation scope unless the user changes their disposition.
-- Correct the root cause within the agreed scope. Follow the project's architecture, ownership, conventions, and test strategy; reuse established mechanisms and idiomatic, supported APIs for its actual language, framework, and library versions.
-- Substantiate non-obvious technical choices with current primary documentation applicable to those versions, direct reproduction, focused tests, or representative observed output. Model recollection and reviewer assertions are not evidence. Research until the relevant uncertainty is resolved, without expanding into a general audit.
-- Validate the changed behavior and relevant boundaries. For behavioral defects, prefer a focused regression test that demonstrates the failure before the fix and passes afterward when practical. Run applicable tests, static analysis, and build checks; investigate failures and distinguish pre-existing failures from regressions. State any verification gaps without claiming unobserved results.
+- Correct the root cause within the agreed scope using idiomatic, supported APIs for the project's installed versions.
+- Reuse applicable triage evidence. Substantiate remaining non-obvious choices with version-applicable primary documentation, reproduction, tests, or observed output; model recollection and reviewer assertions are not evidence. Stop when the relevant uncertainty is resolved.
+- For behavioral defects, prefer a focused regression test that fails before the fix and passes afterward when practical. Distinguish pre-existing validation failures from regressions.
 
 ## Commit locally and present for review
 

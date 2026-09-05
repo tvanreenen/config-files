@@ -11,9 +11,7 @@ Establish a shared understanding of the plan, decision, or idea before acting on
 
 - Identify the objective, constraints, assumptions, decisions, dependencies, risks, and unresolved questions.
 - Treat the work as a dependency graph. A question is ready only when its prerequisite decisions and facts are settled.
-- Use the current conversation and available project context. For repository work, inspect the relevant code paths, conventions, dependencies, tests, and authoritative documentation before asking questions that this evidence can answer.
-- For technical work, examine architectural fit, ownership boundaries, reuse, separation of concerns, seams, version constraints, and the verification strategy.
-- Separate discoverable facts from user-owned decisions. Investigate facts yourself; ask the user only for intent, priorities, acceptable tradeoffs, and choices that materially change the result.
+- Use the conversation and project evidence to resolve discoverable facts. Ask the user only for intent, priorities, acceptable tradeoffs, and choices that materially change the result.
 
 ## Work in rounds
 
