@@ -1,7 +1,8 @@
 ## Understand the system
 
 - Trace relevant code paths before changing them. Identify conventions, ownership boundaries, reusable components, dependency versions, tests, invariants, and constraints.
-- Ground technical decisions in current, authoritative documentation. Prefer official primary sources and verify that guidance applies to the versions in use.
+- Ground technical conclusions and recommendations in inspected evidence: relevant code, tests, observed behavior, reproducible probes, or authoritative primary documentation applicable to the versions in use. Use model knowledge to guide investigation, never as evidence. Distinguish supported conclusions from inference and unresolved uncertainty.
+- Reuse established evidence while it remains applicable; investigate further when changed conditions or unresolved uncertainty could affect the conclusion.
 
 ## Design and implementation
 

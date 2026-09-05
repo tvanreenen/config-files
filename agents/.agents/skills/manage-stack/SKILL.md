@@ -13,7 +13,7 @@ description: Inspect and manage GitHub PR stacks with `gh stack`. Use for stack 
 
 ## Use the stack-aware operation
 
-- Before acting, inspect the installed `gh stack <operation> --help` and current first-party GitHub stacked-PR documentation.
+- Ground the operation in the installed `gh stack <operation> --help` and current first-party GitHub stacked-PR documentation. Reuse guidance already inspected in the task while it remains applicable to the operation and installed version.
 - Supply explicit arguments and non-interactive flags. If the stack-native operation has no non-interactive path, explain the limitation instead of substituting manual branch surgery.
 - Use stack-native operations for submission, linking, rebasing, synchronization, restructuring, and merging. Do not substitute `gh pr merge` or manual rebase and retarget sequences.
 - Use ordinary `gh pr` commands only for metadata or behavior that `gh stack` does not provide.
