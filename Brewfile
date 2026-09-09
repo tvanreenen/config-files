@@ -13,6 +13,7 @@ tap "tvanreenen/tap"
 # ============================================================================
 
 brew "azure-cli"
+brew "btop"
 brew "cloudflared"
 brew "felixkratz/formulae/sketchybar"
 brew "fnm"
