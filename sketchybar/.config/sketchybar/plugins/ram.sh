@@ -1,52 +1,46 @@
 #!/bin/sh
 
 
-STATE_FILE="/tmp/sketchybar_ram_total"
+TOTAL_BYTES=$(sysctl -n hw.memsize 2>/dev/null)
+VM_STAT=$(vm_stat 2>/dev/null)
 
-if [ -f "$STATE_FILE" ]; then
-  TOTAL_PHYSICAL_MB=$(cat "$STATE_FILE")
-else
-  TOTAL_PHYSICAL_BYTES=$(sysctl -n hw.memsize 2>/dev/null)
-  if [ -z "$TOTAL_PHYSICAL_BYTES" ]; then
-    sketchybar --set "$NAME" label="RAM N/A"
-    exit 0
-  fi
-  TOTAL_PHYSICAL_MB=$((TOTAL_PHYSICAL_BYTES / 1024 / 1024))
-  echo "$TOTAL_PHYSICAL_MB" > "$STATE_FILE"
-fi
-
-MEM_DATA=$(top -l 1 | awk '/PhysMem/ {
-  compressed = $6
-  gsub(/M/, "", compressed)
-  gsub(/,/, "", compressed)
-  print compressed
-  exit
-}')
-
-VM_STAT=$(vm_stat)
-
-if [ -z "$MEM_DATA" ] || [ -z "$VM_STAT" ]; then
-  sketchybar --set "$NAME" label="RAM N/A"
-  exit 0
-fi
-
-USED_MB=$(echo "$VM_STAT" | awk -v compressed="$MEM_DATA" '
-  /Pages active/ {active = $NF; gsub(/\./, "", active)}
-  /Pages wired/ {wired = $NF; gsub(/\./, "", wired)}
+# Stats-style used memory: include the compressed footprint, exclude caches.
+# https://github.com/exelban/stats/blob/master/Modules/RAM/readers.swift
+PERCENT=$(printf '%s\n' "$VM_STAT" | awk -F: -v total="$TOTAL_BYTES" '
+  /page size of [0-9]+ bytes/ {
+    size = $0
+    sub(/^.*page size of /, "", size)
+    sub(/ bytes.*$/, "", size)
+  }
+  $1 ~ /^(Pages active|Pages inactive|Pages speculative|Pages wired down|Pages occupied by compressor|Pages purgeable|File-backed pages)$/ {
+    value = $2
+    gsub(/[[:space:]]/, "", value)
+    sub(/\.$/, "", value)
+    if (value !~ /^[0-9]+$/) invalid = 1
+    pages[$1] = value + 0
+  }
   END {
-    # Convert pages to MB (16KB per page) and add compressed
-    active_mb = active * 16 / 1024
-    wired_mb = wired * 16 / 1024
-    used = active_mb + wired_mb + compressed
-    printf "%.0f", used
+    split("Pages active:Pages inactive:Pages speculative:Pages wired down:Pages occupied by compressor:Pages purgeable:File-backed pages", required, ":")
+    for (i in required) if (!(required[i] in pages)) invalid = 1
+    if (invalid || total !~ /^[0-9]+$/ || total <= 0 || size <= 0) exit
+    used = (pages["Pages active"] + pages["Pages inactive"] + pages["Pages speculative"] + pages["Pages wired down"] + pages["Pages occupied by compressor"] - pages["Pages purgeable"] - pages["File-backed pages"]) * size
+    if (used < 0 || used > total) exit
+    printf "%.0f", used * 100 / total
   }
 ')
 
-if [ -z "$USED_MB" ] || [ "$TOTAL_PHYSICAL_MB" = "0" ]; then
-  sketchybar --set "$NAME" label="RAM N/A"
+if [ -z "$PERCENT" ]; then
+  sketchybar --set "$NAME" label="RAM N/A" label.color=0xff999999
   exit 0
 fi
 
-PERCENT=$((USED_MB * 100 / TOTAL_PHYSICAL_MB))
+# This sysctl returns dispatch pressure flags, not internal kernel enum values.
+PRESSURE=$(sysctl -n kern.memorystatus_vm_pressure_level 2>/dev/null)
+case "$PRESSURE" in
+  1) COLOR=0xffffffff ;; # Normal: keep the bar default.
+  2) COLOR=0xffffc857 ;; # Warning.
+  4) COLOR=0xffff5f57 ;; # Critical.
+  *) COLOR=0xff999999 ;; # Pressure unavailable; retain the usage reading.
+esac
 
-sketchybar --set "$NAME" label="${PERCENT}%"
+sketchybar --set "$NAME" label="${PERCENT}%" label.color="$COLOR"
