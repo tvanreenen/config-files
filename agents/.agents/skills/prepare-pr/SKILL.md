@@ -1,9 +1,11 @@
 ---
 name: prepare-pr
-description: Draft or revise self-contained, reviewer-accessible PR titles and descriptions from branch, repository, and task context. Use when writing, reviewing, improving, or publishing PR copy on any Git host. Create or update a hosted PR only when explicitly requested and after confirming GitHub hosting.
+description: Draft or revise PR titles and context-rich, reader-accessible, and reviewer-friendly descriptions from branch, repository, and task context. Use when writing, reviewing, improving, or publishing PR copy on any Git host. Create or update a hosted PR only when explicitly requested and after confirming GitHub hosting.
 ---
 
 # Prepare PR
+
+Write a context-rich, reader-accessible, and reviewer-friendly PR description. Write for someone who knows the project but did not follow this task: explain what prompted the change, what it accomplishes, and why this approach makes sense. Concise task updates or review discussions should not set the level of detail for the PR body.
 
 ## Establish scope
 
@@ -21,7 +23,7 @@ description: Draft or revise self-contained, reviewer-accessible PR titles and d
 
 ### Description
 
-- Write a proportionate, self-contained narrative for a reviewer who did not follow the task. Treat the PR body as a durable reviewer artifact, not a summary of the conversation. Preserve the context needed to understand the problem, outcome, approach, verification, and relationship to surrounding work; when shortening, cut repetition before necessary context.
+- Give the reviewer enough context to understand the change without reconstructing its rationale from the diff or conversation. Before finalizing, check that the description explains the problem and reasoning, rather than merely naming changes. Remove repetition and filler, not useful explanation.
 - Center the primary change and organize by reviewer significance, not file order or implementation chronology. Disclose ancillary work without letting it obscure the story; if the diff contains unrelated changes, say so rather than inventing a unified narrative.
 - Explain non-obvious decisions and material risks, mitigations, or tradeoffs that affect review.
 - Ground rationale and assurances in available evidence. Report only verification evidenced by the branch or user, and state gaps directly.
