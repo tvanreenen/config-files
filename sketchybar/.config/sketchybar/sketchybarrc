@@ -50,11 +50,10 @@ sketchybar --add item time left \
                  script="$PLUGIN_DIR/time.sh" \
                  update_freq=1
 
+# weather_temp refreshes all weather labels with one request per interval.
 sketchybar --add item weather_sun left \
            --set weather_sun \
-                 icon="S" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
+                 icon="S"
 
 sketchybar --add item weather_temp left \
            --set weather_temp \
@@ -64,21 +63,15 @@ sketchybar --add item weather_temp left \
 
 sketchybar --add item weather_dewpoint left \
            --set weather_dewpoint \
-                 icon="D" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
+                 icon="D"
 
 sketchybar --add item weather_wind left \
            --set weather_wind \
-                 icon="W" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
+                 icon="W"
 
 sketchybar --add item weather_pressure left \
            --set weather_pressure \
-                 icon="P" \
-                 script="$PLUGIN_DIR/weather.sh" \
-                 update_freq=600
+                 icon="P"
 
 sketchybar --add item weather_summary left \
            --set weather_summary \

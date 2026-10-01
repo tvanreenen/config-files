@@ -19,25 +19,66 @@ LLM_SUMMARY_PROMPT="In one short sentence under 75 characters, say how this weat
 
 CURRENT_TIME=$(date +%s)
 CURRENT_DATETIME_LOCAL=$(date '+%Y-%m-%d %H:%M %Z')
+WEATHER_COLOR="0xffffffff"
+
+validate_weather_json() {
+  jq -ce '
+    select(.error != true) |
+    select([
+      .current.temperature_2m,
+      .current.apparent_temperature,
+      .current.relative_humidity_2m,
+      .current.wind_speed_10m,
+      .current.wind_direction_10m,
+      .current.wind_gusts_10m,
+      .current.pressure_msl
+    ] | all(type == "number")) |
+    select([.daily.sunrise[0], .daily.sunset[0]] |
+      all(if type == "string" then test("T[0-9]{2}:[0-9]{2}$") else false end))
+  ' 2>/dev/null
+}
 
 load_weather_json() {
+  cached_json=""
   if [ -f "$CACHE_FILE" ]; then
     CACHE_TIME=$(head -1 "$CACHE_FILE")
-    if [ $((CURRENT_TIME - CACHE_TIME)) -lt $CACHE_AGE ]; then
-      json=$(tail -n +2 "$CACHE_FILE" | head -1)
-      return 0
-    fi
+    case "$CACHE_TIME" in
+      ''|*[!0-9]*) ;;
+      *)
+        cached_json=$(tail -n +2 "$CACHE_FILE" | validate_weather_json) || cached_json=""
+        if [ -n "$cached_json" ] &&
+           [ "$CACHE_TIME" -le "$CURRENT_TIME" ] &&
+           [ $((CURRENT_TIME - CACHE_TIME)) -lt "$CACHE_AGE" ]; then
+          json="$cached_json"
+          return 0
+        fi
+        ;;
+    esac
   fi
 
-  json="$(curl -s --max-time 5 --connect-timeout 3 "$URL" 2>/dev/null)" || return 1
-  {
-    echo "$CURRENT_TIME"
-    echo "$json"
-  } > "$CACHE_FILE"
+  # Reject HTTP errors and incomplete/error JSON before replacing good data.
+  if response=$(curl -fsS --max-time 5 --connect-timeout 3 "$URL" 2>/dev/null) &&
+     json=$(printf '%s\n' "$response" | validate_weather_json); then
+    # Readers must never see a timestamp paired with a partially written body.
+    cache_tmp=$(mktemp "${CACHE_FILE}.XXXXXX") || return 0
+    if ! { printf '%s\n%s\n' "$CURRENT_TIME" "$json" > "$cache_tmp" &&
+           mv "$cache_tmp" "$CACHE_FILE"; }; then
+      rm -f "$cache_tmp"
+    fi
+    return 0
+  fi
+
+  printf '%s\n' 'SketchyBar weather: fetch failed or returned invalid weather data.' >&2
+  if [ -n "$cached_json" ]; then
+    json="$cached_json"
+    WEATHER_COLOR="0xffffc857"
+    return 0
+  fi
+  return 1
 }
 
 parse_weather_data() {
-  eval $(echo "$json" | jq -r '
+  eval "$(printf '%s\n' "$json" | jq -r '
     .current.temperature_2m,
     .current.apparent_temperature,
     .current.relative_humidity_2m,
@@ -94,15 +135,15 @@ parse_weather_data() {
 
     printf "sunrise=\"%d:%s\"; ", sunrise_hr, sunrise_min
     printf "sunset=\"%s\"", sunset
-  }')
+  }')"
 }
 
 update_weather_items() {
-  sketchybar --set weather_sun label="${sunrise}↑ ${sunset}↓"
-  sketchybar --set weather_temp label="${temp_f_formatted}°F"
-  sketchybar --set weather_dewpoint label="${dewpoint_f_formatted}°F"
-  sketchybar --set weather_wind label="${wdir_formatted}° ${wspd_formatted}${wgust_str}mph"
-  sketchybar --set weather_pressure label="${p_inhg}\""
+  sketchybar --set weather_sun label="${sunrise}↑ ${sunset}↓" label.color="$WEATHER_COLOR" \
+    --set weather_temp label="${temp_f_formatted}°F" label.color="$WEATHER_COLOR" \
+    --set weather_dewpoint label="${dewpoint_f_formatted}°F" label.color="$WEATHER_COLOR" \
+    --set weather_wind label="${wdir_formatted}° ${wspd_formatted}${wgust_str}mph" label.color="$WEATHER_COLOR" \
+    --set weather_pressure label="${p_inhg}\"" label.color="$WEATHER_COLOR"
 }
 
 toggle_weather_summary() {
@@ -153,8 +194,14 @@ toggle_weather_summary() {
   sketchybar --set "$POPUP_ITEM" label="$summary" drawing=on
 }
 
-load_weather_json || exit 1
-[ -n "$json" ] || exit 1
+if ! load_weather_json; then
+  sketchybar --set weather_temp label="—" label.color="$WEATHER_COLOR" \
+    --set weather_sun label="—" label.color="$WEATHER_COLOR" \
+    --set weather_dewpoint label="—" label.color="$WEATHER_COLOR" \
+    --set weather_wind label="—" label.color="$WEATHER_COLOR" \
+    --set weather_pressure label="—" label.color="$WEATHER_COLOR"
+  exit 1
+fi
 parse_weather_data
 
 if [ "${NAME:-}" = "weather_summary" ]; then
