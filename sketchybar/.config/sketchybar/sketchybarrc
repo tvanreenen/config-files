@@ -125,7 +125,7 @@ sketchybar --add item api_monitor right \
            --set api_monitor \
                  icon="APIs" \
                  script="$PLUGIN_DIR/api-monitor.sh" \
-                 update_freq=3600 \
+                 update_freq=600 \
                  click_script="sketchybar --set api_monitor popup.drawing=toggle" \
                  popup.background.color=0xff000000 \
                  popup.height=20

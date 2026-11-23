@@ -7,7 +7,12 @@
 WEATHER_LATITUDE=25.99
 WEATHER_LONGITUDE=-97.15
 
-# API Monitor configuration (JSON format: service name -> URL)
+# Live status key and space-separated monitor UUIDs from https://live.tvr.works.
+# The popup shows each monitor's latest check from the last 30 one-minute buckets.
+LIVE_STATUS=''
+LIVE_MONITOR_IDS=''
+
+# Direct API checks when Live is not configured (JSON format: service name -> URL)
 # The key is the service name displayed in the popup menu
 # The value is the URL to check for health/status
 API_MONITOR_CONFIG='{
